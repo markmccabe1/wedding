@@ -166,7 +166,7 @@ a {
 }
 
 a:hover {
-  color: #d6370c;
+  color: #7abcde;
   text-decoration: underline;
 }
 
@@ -2214,7 +2214,7 @@ textarea.form-control {
 .btn {
   display: inline-block;
   font-weight: 400;
-  color: #212529;
+  color: #7abcde;
   text-align: center;
   vertical-align: middle;
   -webkit-user-select: none;
@@ -2237,7 +2237,7 @@ textarea.form-control {
 }
 
 .btn:hover {
-  color: #212529;
+  color: #7abcde;
   text-decoration: none;
 }
 
@@ -2263,8 +2263,8 @@ fieldset:disabled a.btn {
 
 .btn-primary:hover {
   color: #fff;
-  background-color: #f24516;
-  border-color: #ee3e0d;
+  background-color: #7abcde;
+  border-color: #7abcde;
 }
 
 .btn-primary:focus, .btn-primary.focus {
@@ -2280,8 +2280,8 @@ fieldset:disabled a.btn {
 .btn-primary:not(:disabled):not(.disabled):active, .btn-primary:not(:disabled):not(.disabled).active,
 .show > .btn-primary.dropdown-toggle {
   color: #fff;
-  background-color: #ee3e0d;
-  border-color: #e23a0d;
+  background-color: #7abcde;
+  border-color: #7abcde;
 }
 
 .btn-primary:not(:disabled):not(.disabled):active:focus, .btn-primary:not(:disabled):not(.disabled).active:focus,
@@ -2790,7 +2790,7 @@ fieldset:disabled a.btn {
 }
 
 .btn-link:hover {
-  color: #d6370c;
+  color: #7abcde;
   text-decoration: underline;
 }
 
@@ -3932,7 +3932,7 @@ input[type="button"].btn-block {
 .nav-pills .nav-link.active,
 .nav-pills .show > .nav-link {
   color: #fff;
-  background-color: #507b91;
+  background-color: #7abcde;
 }
 
 .nav-fill .nav-item {
@@ -4604,7 +4604,7 @@ input[type="button"].btn-block {
 
 .page-link:hover {
   z-index: 2;
-  color: #d6370c;
+  color: #7abcde;
   text-decoration: none;
   background-color: #e9ecef;
   border-color: #dee2e6;
@@ -9369,7 +9369,7 @@ button.bg-dark:focus {
 }
 
 a.text-primary:hover, a.text-primary:focus {
-  color: #d6370c !important;
+  color: #7abcde !important;
 }
 
 .text-secondary {
@@ -9610,7 +9610,7 @@ hr.light {
 }
 
 #mainNav .navbar-nav .nav-item .nav-link:hover, #mainNav .navbar-nav .nav-item .nav-link:active {
-  color: #507b91;
+  color: #7abcde;
 }
 
 #mainNav .navbar-nav .nav-item .nav-link.active {
