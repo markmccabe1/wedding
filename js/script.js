@@ -10,11 +10,11 @@ function calculateWeddingCountdown(){
     var now = new Date();
  
  
-    var christmasDay =  new Date("2020-09-11T13:30:00");
+    var dueDate =  new Date("2020-09-11T12:30:00");
 
  
     //Get the difference in seconds between the two days.
-    var diffSeconds = Math.floor((christmasDay.getTime() - now.getTime()) / 1000);
+    var diffSeconds = Math.floor((dueDate.getTime() - now.getTime()) / 1000);
  
     var days = 0;
     var hours = 0;
