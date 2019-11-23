@@ -13,6 +13,7 @@ $( document ).ready(function() {
 	});
 	
 	$("#signOutButton").click(function(){
+		removeCookie("mmWeddingUser");
 		blankFields();
 		showLogin();
 		showToast("Logged Out");
@@ -166,6 +167,12 @@ function readCookie(name) {
         }
 	}
 	return null;
+}
+
+function removeCookie(name){
+	
+	document.cookie = name+"='""'; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+
 }
 
 
