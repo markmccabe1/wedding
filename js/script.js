@@ -4,13 +4,19 @@ var $user = "";
 
 $( document ).ready(function() {
 
-validateUser()
-calculateWeddingCountdown();
-
-$("#enterbtn").click(function(){
-
-	onFormSubmit();
-})
+	validateUser()
+	calculateWeddingCountdown();
+	
+	$("#enterbtn").click(function(){
+	
+		onFormSubmit();
+	});
+	
+	$("#signOutButton").click(function(){
+		blankFields();
+		showLogin();
+		showToast("Logged Out");
+	});
 
 });
 
@@ -19,10 +25,11 @@ function onFormSubmit(){
 		if(validateForm()){
 		createCookie("mmWeddingUser", $user);
 		showContentImmediately();
+		showToast("Welcome " + $user);
 	}
 	else{
 		blankFields();
-		showError();
+		showToast("Incorrect Name/Code. Please try again");
 	}
 }
 
@@ -51,7 +58,12 @@ function blankFields(){
 	
 }
 
-function showError(){
+function showToast(message){
+	
+	var html = "<div><br><p>&nbsp;&nbsp;"+message+"&nbsp;&nbsp;</p></div>";
+	
+	
+	$("#myToast").html(html);
 	$("#myToast").toast('show');
 }
 
@@ -121,7 +133,7 @@ function showContent(){
 }
 
 function showContentImmediately(){
-	
+		$("#userDisplay").text("Hi " + $user);
 		$("#content").show();
 		$("#access").hide();
 	
