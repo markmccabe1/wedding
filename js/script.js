@@ -3,12 +3,20 @@ var $user = "";
 
 
 $( document ).ready(function() {
-calculateWeddingCountdown();
-validateUser()
 
+validateUser()
+calculateWeddingCountdown();
 
 $("#enterbtn").click(function(){
-	if(validateForm()){
+
+	onFormSubmit();
+})
+
+});
+
+
+function onFormSubmit(){
+		if(validateForm()){
 		createCookie("mmWeddingUser", $user);
 		showContent();
 	}
@@ -16,13 +24,7 @@ $("#enterbtn").click(function(){
 		blankFields();
 		showError();
 	}
-	
-})
-
-});
-
-
-
+}
 
 
 
@@ -60,12 +62,13 @@ function validateUser(){
 	var cookie = readCookie("mmWeddingUser");
 
 	if(cookie != null){
-		$user = cookie.value;
-		showContent();
+		$user = cookie;
+		showContentImmediately();
 		console.log('Cookie found for user' + $user)
 	}
 	else{
 		console.log("no cookie");
+		showLogin();
 	}
 }
 
@@ -115,6 +118,18 @@ function showContent(){
 		$("#content").show();
 		$("#access").slideUp();
 	
+}
+
+function showContentImmediately(){
+	
+		$("#content").show();
+		$("#access").hide();
+	
+}
+
+function showLogin(){
+		$("#access").show();
+		$("#content").hide();
 }
 
 function createCookie(key, value) {
