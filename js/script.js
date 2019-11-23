@@ -21,6 +21,21 @@ $( document ).ready(function() {
 
 });
 
+function sanitizeString(str){
+    str = str.replace(/[^a-z0-9‡Ž’—œ–Ÿ \.,_-]/gim,"");
+    return str.trim();
+}
+
+function isInvalidString(str){
+	  var letters = /^[0-9a-zA-Z]+$/;
+	  if (letters.test(str)) {
+	    return false;
+	  } else {
+	    return true;
+	  }
+}
+
+
 
 function onFormSubmit(){
 		if(validateForm()){
@@ -41,12 +56,20 @@ function validateForm(){
 	$user = $("#nameInput").val();
 	var code = $("#codeInput").val().toLowerCase();
 	
+	if(isInvalidString($user)){
+		return false;
+	}
+	
+	if(isInvalidString(code)){
+		return false;
+	}
+	
 	if($user == null || $user === ""){
-		return false
+		return false;
 	}
 	
 	if(code == "2bmccabe"){
-		return true 
+		return true;
 	}
 	
 	return false;
@@ -77,10 +100,8 @@ function validateUser(){
 	if(cookie != null){
 		$user = cookie;
 		showContentImmediately();
-		console.log('Cookie found for user' + $user)
 	}
 	else{
-		console.log("no cookie");
 		showLogin();
 	}
 }
@@ -148,8 +169,6 @@ function showLogin(){
 function createCookie(key, value) {
     let cookie = escape(key) + "=" + escape(value) + ";SameSite=Strict; Secure";
     document.cookie = cookie;
-    console.log(cookie);
-    console.log("Creating new cookie with key: " + key + "; value: " + value + ";  ");
 }
 
 function readCookie(name) {
@@ -158,7 +177,6 @@ function readCookie(name) {
 	for (let i = 0; i < cookies.length; i++) {
 		
 		let cookie = cookies[i];
-		console.log(cookie);
 		while (cookie.charAt(0) === ' ') {
             cookie = cookie.substring(1, cookie.length);
         }
@@ -171,7 +189,7 @@ function readCookie(name) {
 
 function removeCookie(name){
 	
-	document.cookie = name+"=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+	document.cookie = name+"=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;SameSite=Strict; Secure";
 
 }
 
