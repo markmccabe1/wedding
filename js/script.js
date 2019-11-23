@@ -18,7 +18,7 @@ $("#enterbtn").click(function(){
 function onFormSubmit(){
 		if(validateForm()){
 		createCookie("mmWeddingUser", $user);
-		showContent();
+		showContentImmediately();
 	}
 	else{
 		blankFields();
