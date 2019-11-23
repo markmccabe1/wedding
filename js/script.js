@@ -1,6 +1,74 @@
+
+var $user = "";
+
+
 $( document ).ready(function() {
 calculateWeddingCountdown();
-  });
+validateUser()
+
+
+$("#enterbtn").click(function(){
+	if(validateForm()){
+		createCookie("mmWeddingUser", $user);
+		showContent();
+	}
+	else{
+		blankFields();
+		showError();
+	}
+	
+})
+
+});
+
+
+
+
+
+
+function validateForm(){
+
+	$user = $("#nameInput").val();
+	var code = $("#codeInput").val().toLowerCase();
+	
+	if($user == null || $user === ""){
+		return false
+	}
+	
+	if(code == "2bmccabe"){
+		return true 
+	}
+	
+	return false;
+}
+
+function blankFields(){
+	$user = "";
+	$("#loginForm").trigger("reset");
+	
+	
+}
+
+function showError(){
+	$("#myToast").toast('show');
+}
+
+
+
+
+function validateUser(){
+	var cookie = readCookie("mmWeddingUser");
+
+	if(cookie != null){
+		$user = cookie.value;
+		showContent();
+		console.log('Cookie found for user' + $user)
+	}
+	else{
+		console.log("no cookie");
+	}
+}
+
 
 
 
@@ -41,6 +109,40 @@ function calculateWeddingCountdown(){
     //Recursive call after 1 second using setTimeout
     setTimeout(calculateWeddingCountdown, 1000);
 }
+
+function showContent(){
+	
+		$("#content").show();
+		$("#access").slideUp();
+	
+}
+
+function createCookie(key, value) {
+    let cookie = escape(key) + "=" + escape(value) + ";SameSite=Strict; Secure";
+    document.cookie = cookie;
+    console.log(cookie);
+    console.log("Creating new cookie with key: " + key + "; value: " + value + ";  ");
+}
+
+function readCookie(name) {
+	let key = name + "=";
+	let cookies = document.cookie.split(';');
+	for (let i = 0; i < cookies.length; i++) {
+		
+		let cookie = cookies[i];
+		console.log(cookie);
+		while (cookie.charAt(0) === ' ') {
+            cookie = cookie.substring(1, cookie.length);
+        }
+		if (cookie.indexOf(key) === 0) {
+            return cookie.substring(key.length, cookie.length);
+        }
+	}
+	return null;
+}
+
+
+
 
 
 
