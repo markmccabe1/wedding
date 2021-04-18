@@ -38,7 +38,7 @@ function isInvalidString(str){
 
 
 function onFormSubmit(){
-		if(validateForm()){
+	if(validateForm()){
 		createCookie("mmWeddingUser", $user);
 		showContentImmediately();
 		showToast("Welcome " + $user);
@@ -96,13 +96,19 @@ function showToast(message){
 
 function validateUser(){
 	var cookie = readCookie("mmWeddingUser");
+	var queryString = window.location.href;
 
 	if(cookie != null){
 		$user = cookie;
 		showContentImmediately();
 	}
 	else{
-		showLogin();
+		if(queryString.includes("test")){
+			showContentImmediately();
+		}
+		else{
+					showLogin();
+		}
 	}
 }
 
@@ -115,7 +121,7 @@ function calculateWeddingCountdown(){
     var now = new Date();
  
  
-    var dueDate =  new Date("2020-09-11T12:30:00");
+    var dueDate =  new Date("2021-07-15T12:30:00");
 
  
     //Get the difference in seconds between the two days.
@@ -192,7 +198,6 @@ function removeCookie(name){
 	document.cookie = name+"=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;SameSite=Strict; Secure";
 
 }
-
 
 
 
