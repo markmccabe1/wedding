@@ -245,6 +245,9 @@
                         <h2 class=" mt-0">RSVP</h2>
                         <p>Please use the form below to submit your attendance and menu choices.<p>
                         <hr class="divider light my-4">
+                        <div id = "rsvpspinner" class="container text-center">
+                            <div class="spinner-border"></div>
+                        </div>
                         <div id = "accordian">
                             <div id = "dynamicInput">
                             </div>
@@ -274,7 +277,7 @@
                                                 </span>
                                             </div>
                                             <div class='col-sm-12'>
-                                                <button class="btn btn-primary float-right">edit</button>
+                                                <button class="btn btn-primary float-right editBtn"data-target="$id$">edit</button>
                                             </div>
                                         </div>
                                     </div>
@@ -294,7 +297,7 @@
                                             <div class='col'>
                                                 <span class="float-right">
                                                     <div class='col-sm-12'>
-                                                        <button class="btn btn-primary float-right">edit</button>
+                                                        <button class="btn btn-primary float-right editBtn" data-target="$id$">edit</button>
                                                     </div>
                                                 </span>
                                             </div>
@@ -341,12 +344,12 @@
                                                 <div class="form-group row padded">
                                                         <div class="col">
                                                             <span >
-                                                                <label for="attendingSelect">Will you be attending?</label>
+                                                                <label for="$id$attendingSelect">Will you be attending?</label>
                                                             </span>
                                                         </div>
                                                         <div class='col'>
                                                             <span class="float-right">
-                                                                <select class="form-control attendingSelect" id="attendingSelect">
+                                                                <select class="form-control attendingSelect" id="$id$attendingSelect">
                                                                   <option></option>
                                                                   <option>Yes</option>
                                                                   <option>No</option>
@@ -359,12 +362,12 @@
                                                     <div class="form-group row padded">
                                                             <div class="col">
                                                                 <span class="float-left">
-                                                                    <label for="starterSelect">What would you like for your Starter?</label>
+                                                                    <label for="$id$starterSelect">What would you like for your Starter?</label>
                                                                 </span>
                                                             </div>
                                                             <div class='col'>
                                                                 <span class="float-right">
-                                                                    <select class="form-control" id="starterSelect">
+                                                                    <select class="form-control" id="$id$starterSelect">
                                                                       <option></option>
                                                                       <option>Soup</option>
                                                                       <option>Prawn Cocktail</option>
@@ -376,12 +379,12 @@
                                                     <div class="form-group row padded">
                                                             <div class="col">
                                                                 <span class="float-left">
-                                                                    <label for="mainSelect">What would you like for your Main Course?</label>
+                                                                    <label for="$id$mainSelect">What would you like for your Main Course?</label>
                                                                 </span>
                                                             </div>
                                                             <div class='col'>
                                                                 <span class="float-right">
-                                                                    <select class="form-control" id="mainSelect">
+                                                                    <select class="form-control" id="$id$mainSelect">
                                                                       <option></option>
                                                                       <option>Beef</option>
                                                                       <option>Chicken</option>
@@ -394,12 +397,12 @@
                                                     <div class="form-group row padded">
                                                             <div class="col">
                                                                 <span class="float-left">
-                                                                    <label for="alergyInput">Do you have any allergies we should be aware of?</label>
+                                                                    <label for="$id$alergyInput">Do you have any allergies we should be aware of?</label>
                                                                 </span>
                                                             </div>
                                                             <div class='col'>
                                                                 <span class="float-right">
-                                                                    <input type="text" class="form-control" id="alergyInput">
+                                                                    <input type="text" class="form-control" id="$id$alergyInput">
                                                                 </span>
                                                             </div>
                                                         </span>

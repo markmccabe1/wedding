@@ -279,7 +279,10 @@ function generateRSVP(){
 	console.log(group);
 
 	if(group != null){
+		
 		console.log("group is not null");
+		$("#dynamicInput").empty();
+
 
 		var i = 0;
 
@@ -300,13 +303,10 @@ function generateRSVP(){
 				$("#dynamicInput").append(createForm(a['forname'], a['surname'], a['_id']));
 				console.log("reply");
 			}
-
 		}
-
-
-
 	}
-
+	$("#rsvpspinner").hide();
+	return true;
 }
 
 
@@ -416,7 +416,6 @@ function createForm(forename, surname, id){
 
     var form = $("#ReplyCard").html();
 
-
     var replacementDiv = id+"Form";
     var replacementForm = id+"Form";
 	var replacementBtn = id+"Submit";
@@ -428,6 +427,16 @@ function createForm(forename, surname, id){
     form = form.replace("$formName$", replacementForm);
 	form = form.replace("$formSubmitBtn$", replacementBtn);
 	form = form.replace("$hiddenFormItems$", replacementItems);
+	form = form.replace("$id$", id);
+	form = form.replace("$id$", id);
+	form = form.replace("$id$", id);
+	form = form.replace("$id$", id);
+	form = form.replace("$id$", id);
+	form = form.replace("$id$", id);
+	form = form.replace("$id$", id);
+	form = form.replace("$id$", id);
+	form = form.replace("$id$", id);
+	form = form.replace("$id$", id);
 
 	return form;
 
@@ -445,6 +454,7 @@ function createAttending(forename, surname, starter, main, allergy, id){
     attending = attending.replace("$starterVal$", starter);
 	attending = attending.replace("$mainVal$", main);
 	attending = attending.replace("$allergyVal$", allergy);
+	attending = attending.replace("$id$", id);
 
 	return attending;
 
@@ -458,6 +468,7 @@ function createNotAttending(forename, surname, id){
 	notAttending = notAttending.replace("$name$", forename + " " + surname);
 	notAttending = notAttending.replace("$divName$", replacementDiv);
 	notAttending = notAttending.replace("$divName$", replacementDiv);
+	notAttending = notAttending.replace("$id$", id);
 
 
 	return notAttending;
@@ -474,7 +485,31 @@ $(document).on("click", ".clickable", function() {
 	$(collapsedDiv).collapse('toggle');
  });
 
+$(document).on("click", ".editBtn", function() {
+	
+	
+	var data = $(this).data('target');
+	console.log(data);
 
+	var a = attendees.find(x => x['_id'] === data);
+	console.log("Change this record");
+	console.log(a);
+
+	resetRecord();
+ });
+
+function resetRecord(){
+	
+	
+	$("#rsvpspinner").show();
+	getUsers();
+	getUserGroup();
+	if(generateRSVP()){
+		$("#rsvpspinner").hide();
+	}
+	
+
+}
 
 
 
