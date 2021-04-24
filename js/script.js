@@ -5,6 +5,7 @@ var loadCounter = 0;
 var db = null;
 var attendee = null;
 var attendees = [];
+var userGroup = [];
 
 $( document ).ready(function() {
 
@@ -23,8 +24,8 @@ $( document ).ready(function() {
 		showToast("Logged Out");
 	});
 
-	db = new restdb("60834b7328bf9b609975a5f9", null);
 	getUsers();
+	//createDummyData();
 });
 
 
@@ -32,11 +33,13 @@ function getUsers(){
 	console.log("getUsers()");
 	var query = {}; // get all records
 	var hints = {"$max": 10, "$orderby": {"_id": -1}}; // top ten, sort by creation id in descending order
+	db = new restdb("60834b7328bf9b609975a5f9", null);
 	db.attendee.find(query, hints, function(err, res){
 	  if (!err){
 	    console.log(res);
 	    console.log("users retrieved");
 	    attendees = res;
+	    
 	  }else{
 	  	console.log("users not retrieved");
 	  }
@@ -112,24 +115,28 @@ function validateForm(){
 
 function findUser(){
 	
+	
 	var nameArray = $user.split(" ");
 	var forename = nameArray[0];
 	var surname = nameArray[1];
 
 
 	console.log("getUser" + forename + surname);
-	var result = false;
+
 	var query = {"forname" : forename, "surname": surname}; // get all records
 	var hints = {"$max": 10, "$orderby": {"_id": -1}}; // top ten, sort by creation id in descending order
+	db = new restdb("60834b7328bf9b609975a5f9", null);
 	db.attendee.find(query, hints, function(err, res){
 	  if (!err){
 	  	attendee = res[0];
+	  	console.log("new attendee");
+	  	console.log(attendee);
+
 
 	  	if(attendee != null){
-	  		console.log("creating cookie" + forename + surname);
-
 	  		setAttendee();
 			showContentImmediately();
+			getUserGroup();
 
 	  		if(attendee['attending'] == ""){
 	  			showBodyToast("You're Invited. Please RSVP below");
@@ -147,8 +154,67 @@ function findUser(){
 	  else{
 	  	console.log(err);
 	  }
-	});
+	});				
 }
+
+function getUserGroup(){
+	userGroup = [];
+
+	if(attendee == null){
+		console.log("attendee null");
+		return;
+	}
+	var group = attendee['group'];
+	console.log(group);
+
+	if(group == ""){
+		userGroup = [attendee];
+		console.log(userGroup);
+		generateRSVP();
+	}
+	else{
+		var query = {"group" : group}; // get all records
+
+		var hints = {"$max": 10, "$orderby": {"_id": -1}}; // top ten, sort by creation id in descending order
+		db = new restdb("60834b7328bf9b609975a5f9", null);
+		db.attendee.find(query, hints, function(err, res){
+		  if (!err){
+		  		userGroup = res;
+		  		generateRSVP();
+		  	}
+		  });
+		}
+
+	
+}
+
+$(document).on("change", ".attendingSelect", function() {
+
+  var attendingInput = $(this).val();
+
+  var form = $(this).closest("form").attr('id');
+
+  var formButton = "#" + form.replace("Form", "Submit");
+  var hiddenFormItems = "#" + form.replace("Form", "Items");
+
+  console.log(formButton + hiddenFormItems);
+
+
+		if(attendingInput === "Yes"){
+			$(hiddenFormItems).show();
+			$(formButton).prop("disabled", false);
+		}
+
+		if(attendingInput === "No"){
+			$(hiddenFormItems).hide();
+			$(formButton).prop("disabled", false);
+		}
+
+		if(attendingInput === ""){
+			$(hiddenFormItems).hide();
+			$(formButton).prop("disabled", true);
+		}
+});
 
 
 
@@ -159,6 +225,7 @@ function blankFields(){
     $validationMessage = "";
 	loadCounter = 0;
 	attendee = null;
+	$("#dynamicInput").empty();
 	
 	
 }
@@ -191,13 +258,13 @@ function checkExistingSession(){
 
 	var forename = localStorage.getItem('forename');
 	var surname = localStorage.getItem('surname');
-	attendee = localStorage.getItem('attendee');
+	var tempAttendee = localStorage.getItem('attendee');
 
 	if(forename != null && surname != null){
 		$user = forename+" " + surname;
-		//refresh();
-		//findUser();
+		attendee = JSON.parse(tempAttendee);
 		showContentImmediately();
+		getUserGroup();
 	}
 	else{
 
@@ -205,7 +272,42 @@ function checkExistingSession(){
 	}
 }
 
+function generateRSVP(){
 
+	var group = userGroup;
+	console.log("generateRSVP");
+	console.log(group);
+
+	if(group != null){
+		console.log("group is not null");
+
+		var i = 0;
+
+		for(i;i<group.length; i++){
+			var a = group[i];
+			console.log("found group member");
+			console.log(a);
+
+			if(a['attending'] === "Yes"){
+				$("#dynamicInput").append(createAttending(a['forname'], a['surname'], a['starter'], a['main'], a['allergies']));
+				console.log("yes");
+			}
+			if(a['attending'] === "No"){
+				$("#dynamicInput").append(createNotAttending(a['forname'], a['surname']));
+				console.log("Not");
+			}
+			if(a['attending'] === ""){
+				$("#dynamicInput").append(createForm(a['forname'], a['surname']));
+				console.log("reply");
+			}
+
+		}
+
+
+
+	}
+
+}
 
 
 function calculateWeddingCountdown(){
@@ -257,6 +359,7 @@ function showContentImmediately(){
 		$("#userDisplay").text("Hi " + $user);
 		$("#content").show();
 		$("#access").hide();
+		$(".hiddenFormItems").hide();
 		
 	
 }
@@ -269,22 +372,81 @@ function showLogin(){
 }
 
 function setAttendee(){
-	console.log("adding attendee to local storage");
 	localStorage.setItem('forename', attendee['forname']);
 	localStorage.setItem('surname', attendee['surname']);
 	localStorage.setItem('attendee', JSON.stringify(attendee));
 }
 
 function removeAttendee(){
-	console.log("removing from local storage");
+	attendee = null;
 	localStorage.clear();
+	$("#dynamicInput").empty();
 
 }
 
+function createDummyData(){
+
+	$("#accordian").append(createForm("Mark", "McCabe"))
+	$("#accordian").append(createAttending("Maeve", "Diamond", "Soup", "Beef", "None"));
+	$("#accordian").append(createNotAttending("Michael", "McCabe"));
+}
+
+function createForm(forename, surname){
+
+    var form = $("#ReplyCard").html();
 
 
+    var replacementDiv = forename+"-"+surname+"Form";
+    var replacementForm = forename+"-"+surname+"Form";
+	var replacementBtn = forename+"-"+surname+"Submit";
+	var replacementItems = forename+"-"+surname+"Items";
 
 
+    form = form.replace("$name$", forename + " " + surname);
+    form = form.replace("$divName$", replacementDiv);
+    form = form.replace("$formName$", replacementForm);
+	form = form.replace("$formSubmitBtn$", replacementBtn);
+	form = form.replace("$hiddenFormItems$", replacementItems);
+
+	return form;
+
+}
+
+function createAttending(forename, surname, starter, main, allergy){
+	var attending = $("#AttendingCard").html();
+
+
+    var replacementDiv = forename+"-"+surname+"Div";
+
+    attending = attending.replace("$name$", forename + " " + surname);
+    attending = attending.replace("$divName$", replacementDiv);
+    attending = attending.replace("$divName$", replacementDiv);
+    attending = attending.replace("$starterVal$", starter);
+	attending = attending.replace("$mainVal$", main);
+	attending = attending.replace("$allergyVal$", allergy);
+
+	return attending;
+
+}
+
+function createNotAttending(forename, surname){
+	var notAttending = $("#NotAttendingCard").html();
+
+	notAttending = notAttending.replace("$name$", forename + " " + surname);
+
+	return notAttending;
+}
+
+
+$(document).on("click", ".clickable", function() {
+	var collapsed = $(this).data('target');
+
+	var collapsedDiv = "#"+ collapsed;
+
+	console.log(collapsedDiv);
+
+	$(collapsedDiv).collapse('toggle');
+ });
 
 
 

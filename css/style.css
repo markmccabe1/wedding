@@ -4,3 +4,23 @@
 #access{
 	display: none
 }
+
+.clickable{
+	cursor: pointer;
+}
+
+.badge-attending{
+	background-color: #005777;
+	color: white;
+}
+
+.badge-reply{
+	background-color: white;
+	border-color: #005777;
+	color: #005777;
+	border-style: solid;
+}
+
+.padded{
+	padding:0.25em 0.4em;
+}
