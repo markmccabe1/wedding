@@ -289,15 +289,15 @@ function generateRSVP(){
 			console.log(a);
 
 			if(a['attending'] === "Yes"){
-				$("#dynamicInput").append(createAttending(a['forname'], a['surname'], a['starter'], a['main'], a['allergies']));
+				$("#dynamicInput").append(createAttending(a['forname'], a['surname'], a['starter'], a['main'], a['allergies'], a['_id']));
 				console.log("yes");
 			}
 			if(a['attending'] === "No"){
-				$("#dynamicInput").append(createNotAttending(a['forname'], a['surname']));
+				$("#dynamicInput").append(createNotAttending(a['forname'], a['surname'], a['_id']));
 				console.log("Not");
 			}
 			if(a['attending'] === ""){
-				$("#dynamicInput").append(createForm(a['forname'], a['surname']));
+				$("#dynamicInput").append(createForm(a['forname'], a['surname'], a['_id']));
 				console.log("reply");
 			}
 
@@ -391,7 +391,7 @@ function createDummyData(){
 	$("#accordian").append(createNotAttending("Michael", "McCabe"));
 }
 
-function createForm(forename, surname){
+/*function createForm(forename, surname){
 
     var form = $("#ReplyCard").html();
 
@@ -410,13 +410,34 @@ function createForm(forename, surname){
 
 	return form;
 
+}*/
+
+function createForm(forename, surname, id){
+
+    var form = $("#ReplyCard").html();
+
+
+    var replacementDiv = id+"Form";
+    var replacementForm = id+"Form";
+	var replacementBtn = id+"Submit";
+	var replacementItems = id+"Items";
+
+
+    form = form.replace("$name$", forename + " " + surname);
+    form = form.replace("$divName$", replacementDiv);
+    form = form.replace("$formName$", replacementForm);
+	form = form.replace("$formSubmitBtn$", replacementBtn);
+	form = form.replace("$hiddenFormItems$", replacementItems);
+
+	return form;
+
 }
 
-function createAttending(forename, surname, starter, main, allergy){
+function createAttending(forename, surname, starter, main, allergy, id){
 	var attending = $("#AttendingCard").html();
 
 
-    var replacementDiv = forename+"-"+surname+"Div";
+    var replacementDiv = id+"Div";
 
     attending = attending.replace("$name$", forename + " " + surname);
     attending = attending.replace("$divName$", replacementDiv);
@@ -429,10 +450,15 @@ function createAttending(forename, surname, starter, main, allergy){
 
 }
 
-function createNotAttending(forename, surname){
+function createNotAttending(forename, surname, id){
 	var notAttending = $("#NotAttendingCard").html();
 
+	var replacementDiv = id+"Div";
+
 	notAttending = notAttending.replace("$name$", forename + " " + surname);
+	notAttending = notAttending.replace("$divName$", replacementDiv);
+	notAttending = notAttending.replace("$divName$", replacementDiv);
+
 
 	return notAttending;
 }

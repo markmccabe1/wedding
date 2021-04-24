@@ -24,3 +24,19 @@
 .padded{
 	padding:0.25em 0.4em;
 }
+
+.borderSpecial{
+	background-color: white;
+	border-color: #005777;
+	color: #005777;
+	border-style: solid;
+	border-width: 1px;
+  	border-radius: 8px;
+}
+
+.borderTop{
+	background-color: white;
+	border-color: #005777;
+	color: #005777;
+	border-top: 1px solid;
+}

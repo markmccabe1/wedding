@@ -250,132 +250,170 @@
                             </div>
                             <div hidden>
                             <!-- Attending -->
-                                <div id="AttendingCard" class="card">
-                                    <div class="row card-body collapsed clickable" data-toggle="collapse" data-target="$divName$">
-                                        <div class='col'>
-                                            <span class="float-left"><h3>$name$</h3></span>
+                                <div id="AttendingCard" >
+                                    <div class="borderSpecial">
+                                        <div class="row card-body collapsed clickable " data-toggle="collapse" data-target="$divName$">
+                                            <div class='col'>
+                                                <span class="float-left"><h3>$name$</h3></span>
+                                            </div>
+                                            <div class='col'>
+                                                <h3><span class="badge badge-reply float-right">Attending</span></h3>
+                                            </div>
+                                            <hr>
                                         </div>
-                                        <div class='col'>
-                                            <h3><span class="badge badge-reply float-right">Attending</span></h3>
+                                        <div id ="$divName$" class="row card-body collapse">
+                                            <div class='col-sm-12 borderTop'>
+                                                <span class="float-left">
+                                                    <br>
+                                                    <h5>Starter</h5>
+                                                    <p>$starterVal$</p>
+                                                    <h5>Main</h5>
+                                                    <p>$mainVal$</p>
+                                                    <h5>Allergies</h5>
+                                                    <p>$allergyVal$</p>
+                                                </span>
+                                            </div>
+                                            <div class='col-sm-12'>
+                                                <button class="btn btn-primary float-right">edit</button>
+                                            </div>
                                         </div>
-                                        <hr>
                                     </div>
-                                    <div id ="$divName$" class="row card-body collapse">
-                                        <div class='col'>
-                                            <span class="float-left">
-                                                <h4>Starter</h4>
-                                                <p>$starterVal$</p>
-                                                <h4>Main</h4>
-                                                <p>$mainVal$</p>
-                                                <h4>Allergies</h4>
-                                                <p>$allergyVal$</p>
-                                            </span>
-                                            </span>
+                                </div>
+                                <div id="NotAttendingCard" >
+                                    <div class="borderSpecial">
+                                        <div class="row card-body collapsed clickable " data-toggle="collapse" data-target="$divName$">
+                                            <div class='col'>
+                                                <span class="float-left"><h3>$name$</h3></span>
+                                            </div>
+                                            <div class='col'>
+                                                <h3><span class="badge badge-reply float-right">Not Attending</span></h3>
+                                            </div>
+                                            <hr>
+                                        </div>
+                                        <div id ="$divName$" class="row card-body collapse">
+                                            <div class='col'>
+                                                <span class="float-right">
+                                                    <div class='col-sm-12'>
+                                                        <button class="btn btn-primary float-right">edit</button>
+                                                    </div>
+                                                </span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- End  Attending -->
                                 <!-- Not Attending -->
-                                <div id="NotAttendingCard" class="card">
-                                    <div class="row card-body">
-                                        <div class='col'>
-                                            <span class="float-left"><h3>$name$</h3></span>
+                               <!-- <div id="NotAttendingCard" class="card">
+                                    <div class="borderSpecial">
+                                        <div class="row card-body clickable collapsed" data-toggle="collapse" data-target="$divName$">
+                                            <div class='col'>
+                                                <span class="float-left"><h3>$name$</h3></span>
+                                            </div>
+                                            <div class='col'>
+                                                <h3><span class="badge badge-reply float-right">Not Attending</span></h3>
+                                            </div>
+                                            <hr>
                                         </div>
-                                        <div class='col'>
-                                            <h3><span class="badge badge-reply float-right">Not Attending</span></h3>
+                                        <div id=$divName$" class="row card-body collapse">
+                                            <div class='col'>
+                                                <span class="float-left btn"><h3>edit</h3></span>
+                                            </div>
+                                            <hr>
                                         </div>
-                                        <hr>
                                     </div>
-                                </div>
+                                </div>-->
                                 <!-- End Not Attending -->
                                 <!-- Reply -->
                                 <div id="ReplyCard" class="card">
-                                    <div class="row card-body clickable collapsed" data-toggle="collapse" data-target="$divName$">
-                                        <div class='col'>
-                                            <span class="float-left"><h3>$name$</h3></span>
+                                    <div class="borderSpecial">
+                                        <div class="row card-body clickable collapsed" data-toggle="collapse" data-target="$divName$">
+                                            <br>
+                                            <div class='col'>
+                                                <span class="float-left"><h3>$name$</h3></span>
+                                            </div>
+                                            <div class='col'>
+                                                <h3><span class="badge badge-reply float-right">Reply</span></h3>
+                                            </div>
+                                            <hr>
                                         </div>
-                                        <div class='col'>
-                                            <h3><span class="badge badge-reply float-right">Reply</span></h3>
-                                        </div>
-                                        <hr>
-                                    </div>
-                                    <div class="row">
-                                        <form id ="$formName$" class="card-body collapse col ">
-                                            <div class="form-group row padded">
-                                                    <div class="col">
-                                                        <span >
-                                                            <label for="attendingSelect">Will you be attending?</label>
+                                        <div class="row">
+                                            <form id ="$formName$" class="card-body collapse col ">
+                                                <div class="form-group row padded">
+                                                        <div class="col">
+                                                            <span >
+                                                                <label for="attendingSelect">Will you be attending?</label>
+                                                            </span>
+                                                        </div>
+                                                        <div class='col'>
+                                                            <span class="float-right">
+                                                                <select class="form-control attendingSelect" id="attendingSelect">
+                                                                  <option></option>
+                                                                  <option>Yes</option>
+                                                                  <option>No</option>
+                                                                </select>
+                                                            </span>
+                                                        </div>
+                                                    </span>
+                                                </div>
+                                                <div class = 'hiddenFormItems' id="$hiddenFormItems$">
+                                                    <div class="form-group row padded">
+                                                            <div class="col">
+                                                                <span class="float-left">
+                                                                    <label for="starterSelect">What would you like for your Starter?</label>
+                                                                </span>
+                                                            </div>
+                                                            <div class='col'>
+                                                                <span class="float-right">
+                                                                    <select class="form-control" id="starterSelect">
+                                                                      <option></option>
+                                                                      <option>Soup</option>
+                                                                      <option>Prawn Cocktail</option>
+                                                                    </select>
+                                                                </span>
+                                                            </div>
                                                         </span>
                                                     </div>
-                                                    <div class='col'>
+                                                    <div class="form-group row padded">
+                                                            <div class="col">
+                                                                <span class="float-left">
+                                                                    <label for="mainSelect">What would you like for your Main Course?</label>
+                                                                </span>
+                                                            </div>
+                                                            <div class='col'>
+                                                                <span class="float-right">
+                                                                    <select class="form-control" id="mainSelect">
+                                                                      <option></option>
+                                                                      <option>Beef</option>
+                                                                      <option>Chicken</option>
+                                                                      <option>Vegetarian</option>
+                                                                    </select>
+                                                                </span>
+                                                            </div>
+                                                        </span>
+                                                    </div>
+                                                    <div class="form-group row padded">
+                                                            <div class="col">
+                                                                <span class="float-left">
+                                                                    <label for="alergyInput">Do you have any allergies we should be aware of?</label>
+                                                                </span>
+                                                            </div>
+                                                            <div class='col'>
+                                                                <span class="float-right">
+                                                                    <input type="text" class="form-control" id="alergyInput">
+                                                                </span>
+                                                            </div>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                                <div class="col">
                                                         <span class="float-right">
-                                                            <select class="form-control attendingSelect" id="attendingSelect">
-                                                              <option></option>
-                                                              <option>Yes</option>
-                                                              <option>No</option>
-                                                            </select>
+                                                            <button disabled class="btn btn-primary submitBtn"id="$formSubmitBtn$">
+                                                                Submit
+                                                            </button>
                                                         </span>
                                                     </div>
-                                                </span>
-                                            </div>
-                                            <div class = 'hiddenFormItems' id="$hiddenFormItems$">
-                                                <div class="form-group row padded">
-                                                        <div class="col">
-                                                            <span class="float-left">
-                                                                <label for="starterSelect">What would you like for your Starter?</label>
-                                                            </span>
-                                                        </div>
-                                                        <div class='col'>
-                                                            <span class="float-right">
-                                                                <select class="form-control" id="starterSelect">
-                                                                  <option></option>
-                                                                  <option>Soup</option>
-                                                                  <option>Prawn Cocktail</option>
-                                                                </select>
-                                                            </span>
-                                                        </div>
-                                                    </span>
-                                                </div>
-                                                <div class="form-group row padded">
-                                                        <div class="col">
-                                                            <span class="float-left">
-                                                                <label for="mainSelect">What would you like for your Main Course?</label>
-                                                            </span>
-                                                        </div>
-                                                        <div class='col'>
-                                                            <span class="float-right">
-                                                                <select class="form-control" id="mainSelect">
-                                                                  <option></option>
-                                                                  <option>Beef</option>
-                                                                  <option>Chicken</option>
-                                                                  <option>Vegetarian</option>
-                                                                </select>
-                                                            </span>
-                                                        </div>
-                                                    </span>
-                                                </div>
-                                                <div class="form-group row padded">
-                                                        <div class="col">
-                                                            <span class="float-left">
-                                                                <label for="alergyInput">Do you have any allergies we should be aware of?</label>
-                                                            </span>
-                                                        </div>
-                                                        <div class='col'>
-                                                            <span class="float-right">
-                                                                <input type="text" class="form-control" id="alergyInput">
-                                                            </span>
-                                                        </div>
-                                                    </span>
-                                                </div>
-                                            </div>
-                                            <div class="col">
-                                                    <span class="float-right">
-                                                        <button disabled class="btn btn-primary submitBtn"id="$formSubmitBtn$">
-                                                            Submit
-                                                        </button>
-                                                    </span>
-                                                </div>
-                                        </form>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                                 <!-- end reply -->
