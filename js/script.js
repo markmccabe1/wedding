@@ -8,7 +8,7 @@ var attendees = [];
 
 $( document ).ready(function() {
 
-	validateUser()
+	checkExistingSession()
 	calculateWeddingCountdown();
 	
 	$("#enterbtn").click(function(){
@@ -17,7 +17,7 @@ $( document ).ready(function() {
 	});
 	
 	$("#signOutButton").click(function(){
-		removeCookie("mmWeddingUser");
+		removeAttendee();
 		blankFields();
 		showLogin();
 		showToast("Logged Out");
@@ -26,6 +26,7 @@ $( document ).ready(function() {
 	db = new restdb("60834b7328bf9b609975a5f9", null);
 	getUsers();
 });
+
 
 function getUsers(){
 	console.log("getUsers()");
@@ -125,7 +126,9 @@ function findUser(){
 	  	attendee = res[0];
 
 	  	if(attendee != null){
-	  		createCookie("mmWeddingUser", $user);
+	  		console.log("creating cookie" + forename + surname);
+
+	  		setAttendee();
 			showContentImmediately();
 
 	  		if(attendee['attending'] == ""){
@@ -184,22 +187,21 @@ function showBodyToast(message){
 
 
 
-function validateUser(){
-	var cookie = readCookie("mmWeddingUser");
-	var queryString = window.location.href;
+function checkExistingSession(){
 
-	if(cookie != null){
-		$user = cookie;
-		findUser();
+	var forename = localStorage.getItem('forename');
+	var surname = localStorage.getItem('surname');
+	attendee = localStorage.getItem('attendee');
+
+	if(forename != null && surname != null){
+		$user = forename+" " + surname;
+		//refresh();
+		//findUser();
 		showContentImmediately();
 	}
 	else{
-		if(queryString.includes("test")){
-			showContentImmediately();
-		}
-		else{
+
 			showLogin();
-		}
 	}
 }
 
@@ -255,6 +257,7 @@ function showContentImmediately(){
 		$("#userDisplay").text("Hi " + $user);
 		$("#content").show();
 		$("#access").hide();
+		
 	
 }
 
@@ -265,35 +268,18 @@ function showLogin(){
 		$("#content").hide();
 }
 
-function createCookie(key, value) {
-    let cookie = escape(key) + "=" + escape(value) + ";SameSite=Strict; Secure";
-    document.cookie = cookie;
+function setAttendee(){
+	console.log("adding attendee to local storage");
+	localStorage.setItem('forename', attendee['forname']);
+	localStorage.setItem('surname', attendee['surname']);
+	localStorage.setItem('attendee', JSON.stringify(attendee));
 }
 
-function readCookie(name) {
-	let key = name + "=";
-	let cookies = document.cookie.split(';');
-	for (let i = 0; i < cookies.length; i++) {
-		
-		let cookie = cookies[i];
-		while (cookie.charAt(0) === ' ') {
-            cookie = cookie.substring(1, cookie.length);
-        }
-		if (cookie.indexOf(key) === 0) {
-            return cookie.substring(key.length, cookie.length);
-        }
-	}
-	return null;
-}
-
-function removeCookie(name){
-	
-	document.cookie = name+"=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;SameSite=Strict; Secure";
+function removeAttendee(){
+	console.log("removing from local storage");
+	localStorage.clear();
 
 }
-
-
-
 
 
 
