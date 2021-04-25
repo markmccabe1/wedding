@@ -159,6 +159,7 @@ function findUser(){
 
 function getUserGroup(){
 	userGroup = [];
+	$("#rsvpspinner").show();
 
 	if(attendee == null){
 		console.log("attendee null");
@@ -180,6 +181,7 @@ function getUserGroup(){
 		db.attendee.find(query, hints, function(err, res){
 		  if (!err){
 		  		userGroup = res;
+		  		$("#rsvpspinner").hide();
 		  		generateRSVP();
 		  	}
 		  });
@@ -273,16 +275,14 @@ function checkExistingSession(){
 }
 
 function generateRSVP(){
-
+	
 	var group = userGroup;
-	console.log("generateRSVP");
+	console.log("group");
 	console.log(group);
 
 	if(group != null){
-		
-		console.log("group is not null");
+				
 		$("#dynamicInput").empty();
-
 
 		var i = 0;
 
@@ -305,8 +305,6 @@ function generateRSVP(){
 			}
 		}
 	}
-	$("#rsvpspinner").hide();
-	return true;
 }
 
 
@@ -360,7 +358,7 @@ function showContentImmediately(){
 		$("#content").show();
 		$("#access").hide();
 		$(".hiddenFormItems").hide();
-		
+		$("#rsvpspinner").show();
 	
 }
 
@@ -488,26 +486,29 @@ $(document).on("click", ".clickable", function() {
 $(document).on("click", ".editBtn", function() {
 	
 	
+
 	var data = $(this).data('target');
 	console.log(data);
 
 	var a = attendees.find(x => x['_id'] === data);
-	console.log("Change this record");
-	console.log(a);
 
-	resetRecord();
- });
-
-function resetRecord(){
-	
-	
-	$("#rsvpspinner").show();
-	getUsers();
-	getUserGroup();
-	if(generateRSVP()){
-		$("#rsvpspinner").hide();
+	if(a != null){
+		putRecord(a);
 	}
 	
+ });
+
+
+function putRecord(input){
+
+
+	  		getUsers();
+			getUserGroup();
+			generateRSVP();
+	    
+
+
+
 
 }
 
