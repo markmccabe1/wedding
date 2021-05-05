@@ -24,7 +24,7 @@ $( document ).ready(function() {
 		showToast("Logged Out");
 	});
 
-	getUsers();
+	//getUsers();
 	//createDummyData();
 });
 
@@ -32,7 +32,7 @@ $( document ).ready(function() {
 function getUsers(){
 	console.log("getUsers()");
 	var query = {}; // get all records
-	var hints = {"$max": 10, "$orderby": {"_id": -1}}; // top ten, sort by creation id in descending order
+	var hints = {"$max": 130, "$orderby": {"_id": -1}}; // top ten, sort by creation id in descending order
 	db = new restdb("60834b7328bf9b609975a5f9", null);
 	db.attendee.find(query, hints, function(err, res){
 	  if (!err){
@@ -204,18 +204,22 @@ $(document).on("change", ".attendingSelect", function() {
 
 		if(attendingInput === "Yes"){
 			$(hiddenFormItems).show();
-			$(formButton).prop("disabled", false);
+			$(formButton).removeClass('btn-secondary').addClass('btn-primary');
+			$(formButton).removeClass('disabled ');
 		}
 
 		if(attendingInput === "No"){
 			$(hiddenFormItems).hide();
-			$(formButton).prop("disabled", false);
+			$(formButton).removeClass('btn-secondary').addClass('btn-primary');
+			$(formButton).removeClass('disabled ');
 		}
 
 		if(attendingInput === ""){
 			$(hiddenFormItems).hide();
-			$(formButton).prop("disabled", true);
+			$(formButton).removeClass('btn-primary').addClass('btn-secondary');
+			$(formButton).addClass('disabled ');
 		}
+		
 });
 
 
@@ -485,32 +489,95 @@ $(document).on("click", ".clickable", function() {
 
 $(document).on("click", ".editBtn", function() {
 	
-	
 
 	var data = $(this).data('target');
-	console.log(data);
 
 	var a = attendees.find(x => x['_id'] === data);
 
 	if(a != null){
-		putRecord(a);
+		resetRsvp(a);
 	}
 	
  });
 
+$(document).on("click", ".submitBtn", function() {
+	
+	var form = $(this).closest("form").serializeArray();
+	parseForm(form);
+	
+	
+ });
 
-function putRecord(input){
+function parseForm(formToProcess){
 
+	var attending = formToProcess[0].value;
 
-	  		getUsers();
-			getUserGroup();
-			generateRSVP();
-	    
+	if(attending === 'No'){
 
+		submitNotAttendingResponse();
+	}
+	if(attending === 'Yes'){
+		if (validateRSVPForm(formToProcess)){
+			submitAttendingResponse(formToProcess);
+		}
 
-
+	}
 
 }
+
+
+function validateRSVPForm(form){
+	if(form.length != 4){
+		return false;
+	}
+	var attending = form[0].value;
+	var starter = form[1].value;
+	var main = form[2].value;
+	var allergy = form[3].value;
+
+	if(attending != 'Yes'){
+		return false;
+	}
+
+	if(starter === '' ){
+		alert("Please select Starter");
+		return false;
+	}
+
+	if(main === '' ){
+		alert("Please select Main Course");
+		return false;
+	}
+
+	return true;
+
+}
+
+function submitNotAttendingResponse(){
+
+	console.log("submit not attending");
+	refreshRSVP();
+}
+
+function submitAttendingResponse(form){
+
+	console.log("submit attending");
+	refreshRSVP();
+}
+
+function resetRsvp(attendee){
+	refreshRSVP();
+}
+
+
+function refreshRSVP(){
+
+	getUserGroup();
+	generateRSVP();
+
+}
+
+
 
 
 
