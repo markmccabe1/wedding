@@ -169,7 +169,6 @@ function getUserGroup(){
 
 	if(group == ""){
 		userGroup = [attendee];
-		console.log(userGroup);
 		generateRSVP();
 	}
 	else{
@@ -513,7 +512,13 @@ $(document).on("click", ".clickable", function() {
  });
 
 $(document).on("click", ".editBtn", function() {
+
+	var id = $(this).attr('data-target');
+
+	var a = userGroup.find(x => x['_id'] === id);
 	
+	$("#modalText").html("<h5>Updated</h5><p>You can now re-submit your RSVP</p><p>RSVP: "+a['forname']+ " " + a['surname'] +"</p>");
+	$("#modalCenter").modal('show');
 
 	var data = $(this).data('target');
 
@@ -547,16 +552,17 @@ function parseForm(form){
 
 	if(attending === 'No'){
 
-		submitNotAttendingResponse(a);
-
 		$("#modalText").html("<h5>Thank you for the reply</h5><p>Sorry you can't come.</p><p>RSVP: "+a['forname']+ " " + a['surname'] +"</p>");
 		$("#modalCenter").modal('show');
+
+		submitNotAttendingResponse(a);
+
 	}
 	if(attending === 'Yes'){
 		if (validateRSVPForm(form, a)){
 			$("#modalText").html("<h5>Thank you!</h5><p>We look forward to seeing you.</p><p>RSVP: "+a['forname']+ " " + a['surname'] +"</p>");
 			$("#modalCenter").modal('show');
-			submitAttendingResponse(form, a);
+			submitAttendingResponse(formToProcess, a);
 		}
 
 	}
@@ -603,25 +609,68 @@ function validateRSVPForm(form){
 
 function submitNotAttendingResponse(attendeeFromForm){
 
-	console.log("submit not attending");
-	refreshRSVP();
+	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"No","starter":"","main":"","allergies":"","group":attendeeFromForm['group']};
+	updateRecord(jsondata, attendeeFromForm['_id']);
+
 }
 
 function submitAttendingResponse(form, attendeeFromForm){
 
-	console.log("submit attending");
+	var attending = form[0].value;
+	var starter = form[1].value;
+	var main = form[2].value;
+	var allergy = form[3].value;
+	console.log("form")
+	console.log(attending);
+	console.log(starter);
+	console.log(main);
+	console.log(allergy);
+	console.log(form);
 
-	refreshRSVP();
+	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"Yes","starter":starter,"main":main,"allergies":allergy,"group":attendeeFromForm['group']};
+	updateRecord(jsondata, attendeeFromForm['_id']);
+	
 }
 
 function resetRsvp(attendeeFromForm){
-	refreshRSVP();
+
+	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"","starter":"","main":"","allergies":"","group":attendeeFromForm['group']};
+	updateRecord(jsondata, attendeeFromForm['_id']);
 }
 
 
 function refreshRSVP(){
 
 	getUserGroup();
-	generateRSVP();
 
 }
+
+function updateRecord(jsondata, id){
+
+	var settings = {
+	  "async": true,
+	  "crossDomain": true,
+	  "url": "https://wedding-9b40.restdb.io/rest/attendee/"+id,
+	  "method": "PUT",
+	  "headers": {
+	    "content-type": "application/json",
+	    "x-apikey": "60834b7328bf9b609975a5f9",
+	    "cache-control": "no-cache"
+	  },
+	  "processData": false,
+	  "data": JSON.stringify(jsondata)
+	}
+
+	$.ajax(settings).done(function (response) {
+		console.log(response);
+		console.log("response from ajax call");
+	  	refreshRSVP();
+	});
+
+
+}
+
+
+
+
+
