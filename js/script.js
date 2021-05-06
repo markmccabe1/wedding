@@ -303,11 +303,34 @@ function generateRSVP(){
 				console.log("Not");
 			}
 			if(a['attending'] === ""){
-				$("#dynamicInput").append(createForm(a['forname'], a['surname'], a['_id']));
+				$("#dynamicInput").append(createForm(a['forname'], a['surname'], a['_id'], a['type']));
+				if(a['type'] == 'child'){
+					updateChildSelect(a['_id'])
+				}
+
 				console.log("reply");
 			}
 		}
 	}
+}
+
+
+function updateChildSelect(id){
+
+	var select = $("#"+id+"mainSelect");
+
+	var o = new Option("Chicken Nuggets", "Chicken Nuggets");
+	$(o).html("Chicken Nuggets");
+
+	var o1 = new Option("Hanburger", "Hamburger");
+	$(o1).html("Hamburger");
+
+	var o2 = new Option("Sausages", "Sausages");
+	$(o2).html("Sausages");
+
+	$(select).append(o);
+	$(select).append(o1);
+	$(select).append(o2);
 }
 
 
@@ -413,7 +436,7 @@ function createDummyData(){
 
 }*/
 
-function createForm(forename, surname, id){
+function createForm(forename, surname, id, type){
 
     var form = $("#ReplyCard").html();
 
@@ -428,6 +451,9 @@ function createForm(forename, surname, id){
     form = form.replace("$formName$", replacementForm);
 	form = form.replace("$formSubmitBtn$", replacementBtn);
 	form = form.replace("$hiddenFormItems$", replacementItems);
+	form = form.replace("$id$", id);
+	form = form.replace("$id$", id);
+	form = form.replace("$id$", id);
 	form = form.replace("$id$", id);
 	form = form.replace("$id$", id);
 	form = form.replace("$id$", id);
@@ -491,7 +517,7 @@ $(document).on("click", ".editBtn", function() {
 
 	var data = $(this).data('target');
 
-	var a = attendees.find(x => x['_id'] === data);
+	var a = userGroup.find(x => x['_id'] === data);
 
 	if(a != null){
 		resetRsvp(a);
@@ -501,28 +527,36 @@ $(document).on("click", ".editBtn", function() {
 
 $(document).on("click", ".submitBtn", function() {
 	
-	var form = $(this).closest("form").serializeArray();
+	var form = $(this).closest("form");
 	parseForm(form);
 	
 	
  });
 
-function parseForm(formToProcess){
+function parseForm(form){
+
+	var id = form.attr('data-target');
+
+	var a = userGroup.find(x => x['_id'] === id);
+
+	var formToProcess = form.serializeArray()
 
 	var attending = formToProcess[0].value;
 
+	a['forname']
+
 	if(attending === 'No'){
 
-		submitNotAttendingResponse();
+		submitNotAttendingResponse(a);
 
-		$("#modalText").html("<h5>Thank you for the reply</h5><p>Sorry you can't come.</p>");
+		$("#modalText").html("<h5>Thank you for the reply</h5><p>Sorry you can't come.</p><p>RSVP: "+a['forname']+ " " + a['surname'] +"</p>");
 		$("#modalCenter").modal('show');
 	}
 	if(attending === 'Yes'){
-		if (validateRSVPForm(formToProcess)){
-			$("#modalText").html("<h5>Thank you!</h5><p>We look forward to seeing you.</p>");
+		if (validateRSVPForm(form, a)){
+			$("#modalText").html("<h5>Thank you!</h5><p>We look forward to seeing you.</p><p>RSVP: "+a['forname']+ " " + a['surname'] +"</p>");
 			$("#modalCenter").modal('show');
-			submitAttendingResponse(formToProcess);
+			submitAttendingResponse(form, a);
 		}
 
 	}
@@ -531,13 +565,17 @@ function parseForm(formToProcess){
 
 
 function validateRSVPForm(form){
-	if(form.length != 4){
+
+	var formToProcess = form.serializeArray();
+	
+
+	if(formToProcess.length != 4){
 		return false;
 	}
-	var attending = form[0].value;
-	var starter = form[1].value;
-	var main = form[2].value;
-	var allergy = form[3].value;
+	var attending = formToProcess[0].value;
+	var starter = formToProcess[1].value;
+	var main = formToProcess[2].value;
+	var allergy = formToProcess[3].value;
 
 	if(attending != 'Yes'){
 		return false;
@@ -551,7 +589,6 @@ function validateRSVPForm(form){
 	}
 
 	if(main === '' ){
-		//alert("Please select Main Course");
 
 
 		$("#modalText").html("<p>Please select Main Course</p>");
@@ -564,19 +601,20 @@ function validateRSVPForm(form){
 
 }
 
-function submitNotAttendingResponse(){
+function submitNotAttendingResponse(attendeeFromForm){
 
 	console.log("submit not attending");
 	refreshRSVP();
 }
 
-function submitAttendingResponse(form){
+function submitAttendingResponse(form, attendeeFromForm){
 
 	console.log("submit attending");
+
 	refreshRSVP();
 }
 
-function resetRsvp(attendee){
+function resetRsvp(attendeeFromForm){
 	refreshRSVP();
 }
 
@@ -587,15 +625,3 @@ function refreshRSVP(){
 	generateRSVP();
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
