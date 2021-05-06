@@ -472,6 +472,9 @@ function createAttending(forename, surname, starter, main, allergy, id){
 	var attending = $("#AttendingCard").html();
 
 
+	if(allergy == ""){
+		allergy = "None";
+	}
     var replacementDiv = id+"Div";
 
     attending = attending.replace("$name$", forename + " " + surname);
@@ -516,8 +519,10 @@ $(document).on("click", ".editBtn", function() {
 	var id = $(this).attr('data-target');
 
 	var a = userGroup.find(x => x['_id'] === id);
-	
-	$("#modalText").html("<h5>Updated</h5><p>You can now re-submit your RSVP</p><p>RSVP: "+a['forname']+ " " + a['surname'] +"</p>");
+
+
+	$("#modalTitle").html("<h5>RSVP: "+a['forname']+ " " + a['surname'] +"</h5>");
+	$("#modalText").html("<p>You can now re-submit your RSVP</p>");
 	$("#modalCenter").modal('show');
 
 	var data = $(this).data('target');
@@ -552,7 +557,8 @@ function parseForm(form){
 
 	if(attending === 'No'){
 
-		$("#modalText").html("<h5>Thank you for the reply</h5><p>Sorry you can't come.</p><p>RSVP: "+a['forname']+ " " + a['surname'] +"</p>");
+		$("#modalTitle").html("<h5>RSVP: "+a['forname']+ " " + a['surname'] +"</h5>");
+		$("#modalText").html("<h5>Thank you for the reply</h5><p>Sorry you can't come.</p>");
 		$("#modalCenter").modal('show');
 
 		submitNotAttendingResponse(a);
@@ -560,7 +566,9 @@ function parseForm(form){
 	}
 	if(attending === 'Yes'){
 		if (validateRSVPForm(form, a)){
-			$("#modalText").html("<h5>Thank you!</h5><p>We look forward to seeing you.</p><p>RSVP: "+a['forname']+ " " + a['surname'] +"</p>");
+
+			$("#modalTitle").html("<h5>RSVP: "+a['forname']+ " " + a['surname'] +"</h5>");
+			$("#modalText").html("<h5>Thank you!</h5><p>We look forward to seeing you.</p>");
 			$("#modalCenter").modal('show');
 			submitAttendingResponse(formToProcess, a);
 		}
