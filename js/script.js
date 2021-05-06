@@ -538,6 +538,15 @@ $(document).on("click", ".editBtn", function() {
 	
  });
 
+
+$(document).on("click", "#helpBtn", function() {
+
+	$("#modalBig").modal('show');
+
+});
+
+
+
 $(document).on("click", ".submitBtn", function() {
 	
 	var form = $(this).closest("form");
