@@ -1,6 +1,5 @@
 
 var $user = "";
-var $validationMessage = "";
 var loadCounter = 0;
 var db = null;
 var attendee = null;
@@ -70,14 +69,12 @@ function onFormSubmit(){
 	}
 	else{
 		blankFields();
-		showToast($validationMessage + ". Please try again");
 	}
 }
 
 
 
 function validateForm(){
-	$validationMessage = "";
 
 	var forename = $("#forenameInput").val();
 	var surname = $("#surnameInput").val();
@@ -86,31 +83,33 @@ function validateForm(){
 	var code = $("#codeInput").val().toLowerCase();
 	
 	if(isInvalidString(forename)){
-		$validationMessage = "Invalid Forename";
+		showToast("Invalid Forename. Please try again");
 		return false;
 	}
 
 	if(isInvalidString(surname)){
-		$validationMessage = "Invalid Surname";
+		showToast("Invalid Surname. Please try again");
 		return false;
 	}
 	
 	if(isInvalidString(code)){
-		$validationMessage = "Invalid Code";
+		showToast("Invalid Code. Please try again");
 		return false;
 	}
 	
 	if($user == null || $user === ""){
-		$validationMessage = "Invalid Name";
+		showToast("Invalid Name. Please try again");
 		return false;
 	}
 
-	if(code == "2bmccabe"){
-		return true;
+	if(code != "2bmccabe"){
+
+		showToast("Invalid Code. Please try again");
+		return false;
 	}
 
-	$validationMessage = "Invalid Code";
-	return false;
+	
+	return true;
 }
 
 function findUser(){
@@ -515,9 +514,14 @@ function parseForm(formToProcess){
 	if(attending === 'No'){
 
 		submitNotAttendingResponse();
+
+		$("#modalText").html("<h5>Thank you for the reply</h5><p>Sorry you can't come.</p>");
+		$("#modalCenter").modal('show');
 	}
 	if(attending === 'Yes'){
 		if (validateRSVPForm(formToProcess)){
+			$("#modalText").html("<h5>Thank you!</h5><p>We look forward to seeing you.</p>");
+			$("#modalCenter").modal('show');
 			submitAttendingResponse(formToProcess);
 		}
 
@@ -540,12 +544,19 @@ function validateRSVPForm(form){
 	}
 
 	if(starter === '' ){
-		alert("Please select Starter");
+
+		$("#modalText").html("<p>Please select a Starter</p>");
+		$("#modalCenter").modal('show');
 		return false;
 	}
 
 	if(main === '' ){
-		alert("Please select Main Course");
+		//alert("Please select Main Course");
+
+
+		$("#modalText").html("<p>Please select Main Course</p>");
+		$("#modalCenter").modal('show');
+
 		return false;
 	}
 
