@@ -621,7 +621,7 @@ function validateRSVPForm(form){
 	if(main === '' ){
 
 		$("#modalTitle").html("<h5>Whoops...</h5>");
-		$("#modalText").html("<p>Please select Main Course</p>");
+		$("#modalText").html("<p>Please select a Main Course</p>");
 		$("#modalCenter").modal('show');
 
 		return false;
