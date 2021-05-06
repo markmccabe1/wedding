@@ -535,24 +535,18 @@ $(document).on("click", ".editBtn", function() {
 	if(a != null){
 		resetRsvp(a);
 	}
-
 	
  });
 
 $(document).on("click", ".submitBtn", function() {
 	
 	var form = $(this).closest("form");
-	parseForm(form);
-
 	var div = $(this).closest('div');
-
-
-	div.html('<span class="float-right"><div class="spinner-border"></div></span>');
-	
+	parseForm(form, div);
 	
  });
 
-function parseForm(form){
+function parseForm(form, div){
 
 	var id = form.attr('data-target');
 
@@ -571,6 +565,8 @@ function parseForm(form){
 		//$("#modalCenter").modal('show');
 
 		submitNotAttendingResponse(a);
+		
+		div.html('<span ><div class="spinner-border"></div></span>');
 
 	}
 	if(attending === 'Yes'){
@@ -580,6 +576,7 @@ function parseForm(form){
 			//$("#modalText").html("<h5>Thank you!</h5><p>We look forward to seeing you.</p>");
 			//$("#modalCenter").modal('show');
 			submitAttendingResponse(formToProcess, a);
+			div.html('<span ><div class="spinner-border"></div></span>');
 		}
 
 	}
@@ -606,6 +603,7 @@ function validateRSVPForm(form){
 
 	if(starter === '' ){
 
+		$("#modalTitle").html("<h5>Whoops...</h5>");
 		$("#modalText").html("<p>Please select a Starter</p>");
 		$("#modalCenter").modal('show');
 		return false;
@@ -613,7 +611,7 @@ function validateRSVPForm(form){
 
 	if(main === '' ){
 
-
+		$("#modalTitle").html("<h5>Whoops...</h5>");
 		$("#modalText").html("<p>Please select Main Course</p>");
 		$("#modalCenter").modal('show');
 

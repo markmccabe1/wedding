@@ -18,12 +18,8 @@
 	background-color: white;
 	border-color: #005777;
 	color: #005777;
-	border-style: solid;
 }
 
-.padded{
-	padding:0.25em 0.4em;
-}
 
 .borderSpecial{
 	background-color: white;
@@ -39,4 +35,12 @@
 	border-color: #005777;
 	color: #005777;
 	border-top: 1px solid;
+}
+
+.rounded{
+	border-radius: 10rem !important;
+}
+
+.padded{
+	padding: 20px;
 }
