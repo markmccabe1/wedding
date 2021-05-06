@@ -158,7 +158,6 @@ function findUser(){
 
 function getUserGroup(){
 	userGroup = [];
-	$("#rsvpspinner").show();
 
 	if(attendee == null){
 		console.log("attendee null");
@@ -516,14 +515,18 @@ $(document).on("click", ".clickable", function() {
 
 $(document).on("click", ".editBtn", function() {
 
+	var div = $(this).closest('div');
+
+	div.html('<div class="spinner-border"></div>');
+
 	var id = $(this).attr('data-target');
 
 	var a = userGroup.find(x => x['_id'] === id);
 
 
-	$("#modalTitle").html("<h5>RSVP: "+a['forname']+ " " + a['surname'] +"</h5>");
-	$("#modalText").html("<p>You can now re-submit your RSVP</p>");
-	$("#modalCenter").modal('show');
+	//$("#modalTitle").html("<h5>RSVP: "+a['forname']+ " " + a['surname'] +"</h5>");
+	//$("#modalText").html("<p>You can now re-submit your RSVP</p>");
+	//$("#modalCenter").modal('show');
 
 	var data = $(this).data('target');
 
@@ -532,6 +535,7 @@ $(document).on("click", ".editBtn", function() {
 	if(a != null){
 		resetRsvp(a);
 	}
+
 	
  });
 
@@ -539,6 +543,11 @@ $(document).on("click", ".submitBtn", function() {
 	
 	var form = $(this).closest("form");
 	parseForm(form);
+
+	var div = $(this).closest('div');
+
+
+	div.html('<span class="float-right"><div class="spinner-border"></div></span>');
 	
 	
  });
@@ -557,9 +566,9 @@ function parseForm(form){
 
 	if(attending === 'No'){
 
-		$("#modalTitle").html("<h5>RSVP: "+a['forname']+ " " + a['surname'] +"</h5>");
-		$("#modalText").html("<h5>Thank you for the reply</h5><p>Sorry you can't come.</p>");
-		$("#modalCenter").modal('show');
+		//$("#modalTitle").html("<h5>RSVP: "+a['forname']+ " " + a['surname'] +"</h5>");
+		//$("#modalText").html("<h5>Thank you for the reply</h5><p>Sorry you can't come.</p>");
+		//$("#modalCenter").modal('show');
 
 		submitNotAttendingResponse(a);
 
@@ -567,9 +576,9 @@ function parseForm(form){
 	if(attending === 'Yes'){
 		if (validateRSVPForm(form, a)){
 
-			$("#modalTitle").html("<h5>RSVP: "+a['forname']+ " " + a['surname'] +"</h5>");
-			$("#modalText").html("<h5>Thank you!</h5><p>We look forward to seeing you.</p>");
-			$("#modalCenter").modal('show');
+			//$("#modalTitle").html("<h5>RSVP: "+a['forname']+ " " + a['surname'] +"</h5>");
+			//$("#modalText").html("<h5>Thank you!</h5><p>We look forward to seeing you.</p>");
+			//$("#modalCenter").modal('show');
 			submitAttendingResponse(formToProcess, a);
 		}
 
