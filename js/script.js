@@ -552,9 +552,7 @@ $(document).on("click", "#helpBtn", function() {
 $(document).on("click", ".submitBtn", function() {
 	
 	$(this).closest('.card-body').collapse('toggle');
-
 	$(this).closest('.borderSpecial').find('.spinnerUpdate').html('<div class="spinner-border float-right"></div>');
-
 
 	var form = $(this).closest("form");
 	var div = $(this).closest('div');
@@ -582,7 +580,7 @@ function parseForm(form, div){
 
 		submitNotAttendingResponse(a);
 		
-		div.html('<span ><div class="spinner-border"></div></span>');
+		//div.html('<span ><div class="spinner-border"></div></span>');
 
 	}
 	if(attending === 'Yes'){
@@ -592,7 +590,9 @@ function parseForm(form, div){
 			//$("#modalText").html("<h5>Thank you!</h5><p>We look forward to seeing you.</p>");
 			//$("#modalCenter").modal('show');
 			submitAttendingResponse(formToProcess, a);
-			div.html('<span ><div class="spinner-border"></div></span>');
+			var elmnt = document.getElementById('rsvp');
+			elmnt.scrollIntoView({behavior: 'smooth'});
+			//div.html('<span ><div class="spinner-border"></div></span>');
 		}
 
 	}
