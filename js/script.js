@@ -570,17 +570,22 @@ $(document).on("click", "#helpBtn", function() {
 
 $(document).on("click", ".submitBtn", function() {
 	
-	$(this).closest('.card-body').collapse('toggle');
-	$(this).closest('.borderSpecial').find('.spinnerUpdate').html('<div class="spinner-border float-right"></div>');
+	//$(this).closest('.card-body').collapse('toggle');
+	//$(this).closest('.borderSpecial').find('.spinnerUpdate').html('<div class="spinner-border float-right"></div>');
 
 	var form = $(this).closest("form");
 	var div = $(this).closest('div');
 
-	$("body, html").animate({
-	    scrollTop: windowOffset
-	});
+	if(parseForm(form, div)){
 
-	parseForm(form, div);
+		$(this).closest('.card-body').collapse('toggle');
+		$(this).closest('.borderSpecial').find('.spinnerUpdate').html('<div class="spinner-border float-right"></div>');
+		$("body, html").animate({
+		    scrollTop: windowOffset
+		});
+	};
+
+	
 	
  });
 
@@ -599,7 +604,7 @@ function parseForm(form, div){
 	if(attending === 'No'){
 
 		submitNotAttendingResponse(a);
-		
+		return true;
 		//div.html('<span ><div class="spinner-border"></div></span>');
 
 	}
@@ -607,6 +612,7 @@ function parseForm(form, div){
 		if (validateRSVPForm(formToProcess, a)){
 
 			submitAttendingResponse(formToProcess, a);
+			return true;
 		}
 
 	}
