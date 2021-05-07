@@ -508,16 +508,18 @@ $(document).on("click", ".clickable", function() {
 
 	var collapsedDiv = "#"+ collapsed;
 
-	console.log(collapsedDiv);
-
 	$(collapsedDiv).collapse('toggle');
  });
 
 $(document).on("click", ".editBtn", function() {
 
-	var div = $(this).closest('div');
+	//var nav = $('html, body').animate({scrollTop:$('#rsvp').position().top}, 'slow');
 
-	div.html('<div class="spinner-border"></div>');
+	$(this).closest('.card-body').collapse('toggle');
+
+	var div = $(this).closest('.borderSpecial').find('.spinnerUpdate');
+
+	div.html('<div class="spinner-border float-right"></div>');
 
 	var id = $(this).attr('data-target');
 
@@ -549,6 +551,11 @@ $(document).on("click", "#helpBtn", function() {
 
 $(document).on("click", ".submitBtn", function() {
 	
+	$(this).closest('.card-body').collapse('toggle');
+
+	$(this).closest('.borderSpecial').find('.spinnerUpdate').html('<div class="spinner-border float-right"></div>');
+
+
 	var form = $(this).closest("form");
 	var div = $(this).closest('div');
 	parseForm(form, div);
