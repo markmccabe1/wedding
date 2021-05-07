@@ -3,13 +3,13 @@ var $user = "";
 var loadCounter = 0;
 var db = null;
 var attendee = null;
-var attendees = [];
 var userGroup = [];
 var offsetDiv;
 var windowOffset;
 
-$( document ).ready(function() {
 
+$( document ).ready(function() {
+	$("#tableOfUsers").hide();
 	checkExistingSession()
 	calculateWeddingCountdown();
 	
@@ -25,31 +25,18 @@ $( document ).ready(function() {
 		showToast("Logged Out");
 	});
 
-	//getUsers();
-	//createDummyData();
+	$("#myInput").on("keyup", function() {
+		var value = $(this).val().toLowerCase();
+		    $("#tableBody tr").filter(function() {
+		      $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+		    });
+	  	});
+
 });
 
 Element.prototype.documentOffsetTop = function () {
 			    return this.offsetTop + ( this.offsetParent ? this.offsetParent.documentOffsetTop() : 0 );
 };
-
-function getUsers(){
-	console.log("getUsers()");
-	var query = {}; // get all records
-	var hints = {"$max": 130, "$orderby": {"_id": -1}}; // top ten, sort by creation id in descending order
-	db = new restdb("60834b7328bf9b609975a5f9", null);
-	db.attendee.find(query, hints, function(err, res){
-	  if (!err){
-	    console.log(res);
-	    console.log("users retrieved");
-	    attendees = res;
-	    
-	  }else{
-	  	console.log("users not retrieved");
-	  }
-	});
-
-}
 
 
 function sanitizeString(str){
@@ -141,6 +128,11 @@ function findUser(){
 	  		setAttendee();
 			showContentImmediately();
 			getUserGroup();
+
+			if(attendee['forname'] == "Admin" && attendee['surname'] == "User"){
+				showAdminTable();
+			}
+			
 
 	  		if(attendee['attending'] == ""){
 	  			showBodyToast("You're Invited. Please RSVP below");
@@ -273,6 +265,10 @@ function checkExistingSession(){
 		attendee = JSON.parse(tempAttendee);
 		showContentImmediately();
 		getUserGroup();
+
+		if(forename == "Admin" && surname == "User"){
+			showAdminTable();
+		}
 	}
 	else{
 
@@ -717,6 +713,45 @@ function updateRecord(jsondata, id){
 
 
 }
+
+function showAdminTable(){
+	console.log("getUsers()");
+	var query = {}; // get all records
+	var hints = {"$max": 130, "$orderby": {"surname": 1}}; // top ten, sort by creation id in descending order
+	db = new restdb("60834b7328bf9b609975a5f9", null);
+	db.attendee.find(query, hints, function(err, res){
+	  if (!err){
+	    console.log("users retrieved");
+	    var attendees = res;
+	    populateTable(attendees);
+	    
+	  }else{
+	  	console.log("users not retrieved");
+	  }
+	});
+
+}
+
+function populateTable(attendees){
+	for(var i=0;i<attendees.length; i++){
+		addRow(attendees[i]);
+	}
+	$('#myTable').DataTable({
+	    ordering: true,
+	    searching:false,
+	    paging: false
+		});
+	$("#tableOfUsers").show();
+}
+
+function addRow(attendee){
+	var row = "<tr><td>"+attendee['forname']+"</td><td>"+attendee['surname']+"</td><td>"+attendee['attending']+"</td><td>"+attendee['starter']+"</td><td>"+attendee['main']+"</td><td>"+attendee['allergies']+"</td></tr>";
+	$("#tableBody").append(row);
+}
+
+
+
+
 
 
 
