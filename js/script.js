@@ -745,7 +745,11 @@ function populateTable(attendees){
 	$('#myTable').DataTable({
     ordering: true,
     searching:false,
-    paging: false
+    paging: false,
+    rowReorder: {
+            selector: 'td'
+        },
+    responsive: true
 	});
 
 
