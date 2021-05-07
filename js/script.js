@@ -9,6 +9,7 @@ var windowOffset;
 
 
 $( document ).ready(function() {
+	attendee = null;
 	$("#tableOfUsers").hide();
 	checkExistingSession()
 	calculateWeddingCountdown();
@@ -20,6 +21,8 @@ $( document ).ready(function() {
 	
 	$("#signOutButton").click(function(){
 		removeAttendee();
+		$("#tableOfUsers").hide();
+		$("#myTable").DataTable().destroy();
 		blankFields();
 		showLogin();
 		showToast("Logged Out");
@@ -130,6 +133,7 @@ function findUser(){
 			getUserGroup();
 
 			if(attendee['forname'] == "Admin" && attendee['surname'] == "User"){
+				console.log("show admin table");
 				showAdminTable();
 			}
 			
@@ -267,6 +271,7 @@ function checkExistingSession(){
 		getUserGroup();
 
 		if(forename == "Admin" && surname == "User"){
+			console.log("loaded existing user");
 			showAdminTable();
 		}
 	}
@@ -736,11 +741,14 @@ function populateTable(attendees){
 	for(var i=0;i<attendees.length; i++){
 		addRow(attendees[i]);
 	}
+
 	$('#myTable').DataTable({
-	    ordering: true,
-	    searching:false,
-	    paging: false
-		});
+    ordering: true,
+    searching:false,
+    paging: false
+	});
+
+
 	$("#tableOfUsers").show();
 }
 
