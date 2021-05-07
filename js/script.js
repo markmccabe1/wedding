@@ -5,6 +5,8 @@ var db = null;
 var attendee = null;
 var attendees = [];
 var userGroup = [];
+var offsetDiv;
+var windowOffset;
 
 $( document ).ready(function() {
 
@@ -27,6 +29,9 @@ $( document ).ready(function() {
 	//createDummyData();
 });
 
+Element.prototype.documentOffsetTop = function () {
+			    return this.offsetTop + ( this.offsetParent ? this.offsetParent.documentOffsetTop() : 0 );
+};
 
 function getUsers(){
 	console.log("getUsers()");
@@ -438,6 +443,7 @@ function createForm(forename, surname, id, type){
 
     var form = $("#ReplyCard").html();
 
+    var borderSpecial = id+"borderSpecial";
     var replacementDiv = id+"Form";
     var replacementForm = id+"Form";
 	var replacementBtn = id+"Submit";
@@ -449,6 +455,7 @@ function createForm(forename, surname, id, type){
     form = form.replace("$formName$", replacementForm);
 	form = form.replace("$formSubmitBtn$", replacementBtn);
 	form = form.replace("$hiddenFormItems$", replacementItems);
+	form = form.replace("$specialBorder$", borderSpecial);
 	form = form.replace("$id$", id);
 	form = form.replace("$id$", id);
 	form = form.replace("$id$", id);
@@ -469,7 +476,7 @@ function createForm(forename, surname, id, type){
 
 function createAttending(forename, surname, starter, main, allergy, id){
 	var attending = $("#AttendingCard").html();
-
+	var borderSpecial = id+"borderSpecial";
 
 	if(allergy == ""){
 		allergy = "None";
@@ -483,6 +490,8 @@ function createAttending(forename, surname, starter, main, allergy, id){
 	attending = attending.replace("$mainVal$", main);
 	attending = attending.replace("$allergyVal$", allergy);
 	attending = attending.replace("$id$", id);
+	attending = attending.replace("$specialBorder$", borderSpecial);
+
 
 	return attending;
 
@@ -490,6 +499,7 @@ function createAttending(forename, surname, starter, main, allergy, id){
 
 function createNotAttending(forename, surname, id){
 	var notAttending = $("#NotAttendingCard").html();
+	var borderSpecial = id+"borderSpecial";
 
 	var replacementDiv = id+"Div";
 
@@ -497,6 +507,8 @@ function createNotAttending(forename, surname, id){
 	notAttending = notAttending.replace("$divName$", replacementDiv);
 	notAttending = notAttending.replace("$divName$", replacementDiv);
 	notAttending = notAttending.replace("$id$", id);
+	notAttending = notAttending.replace("$id$", id);
+	notAttending = notAttending.replace("$specialBorder$", borderSpecial);
 
 
 	return notAttending;
@@ -509,6 +521,14 @@ $(document).on("click", ".clickable", function() {
 	var collapsedDiv = "#"+ collapsed;
 
 	$(collapsedDiv).collapse('toggle');
+
+	offsetDiv = $(collapsedDiv).offset();
+	windowOffset = $(window).scrollTop();
+
+	console.log("offsetDiv");
+	console.log(offsetDiv );
+	console.log(windowOffset);
+
  });
 
 $(document).on("click", ".editBtn", function() {
@@ -521,14 +541,13 @@ $(document).on("click", ".editBtn", function() {
 
 	div.html('<div class="spinner-border float-right"></div>');
 
+	$("body, html").animate({
+	    scrollTop: windowOffset
+	});
+
 	var id = $(this).attr('data-target');
 
 	var a = userGroup.find(x => x['_id'] === id);
-
-
-	//$("#modalTitle").html("<h5>RSVP: "+a['forname']+ " " + a['surname'] +"</h5>");
-	//$("#modalText").html("<p>You can now re-submit your RSVP</p>");
-	//$("#modalCenter").modal('show');
 
 	var data = $(this).data('target');
 
@@ -556,6 +575,11 @@ $(document).on("click", ".submitBtn", function() {
 
 	var form = $(this).closest("form");
 	var div = $(this).closest('div');
+
+	$("body, html").animate({
+	    scrollTop: windowOffset
+	});
+
 	parseForm(form, div);
 	
  });
@@ -570,13 +594,9 @@ function parseForm(form, div){
 
 	var attending = formToProcess[0].value;
 
-	a['forname']
+    
 
 	if(attending === 'No'){
-
-		//$("#modalTitle").html("<h5>RSVP: "+a['forname']+ " " + a['surname'] +"</h5>");
-		//$("#modalText").html("<h5>Thank you for the reply</h5><p>Sorry you can't come.</p>");
-		//$("#modalCenter").modal('show');
 
 		submitNotAttendingResponse(a);
 		
@@ -584,15 +604,9 @@ function parseForm(form, div){
 
 	}
 	if(attending === 'Yes'){
-		if (validateRSVPForm(form, a)){
+		if (validateRSVPForm(formToProcess, a)){
 
-			//$("#modalTitle").html("<h5>RSVP: "+a['forname']+ " " + a['surname'] +"</h5>");
-			//$("#modalText").html("<h5>Thank you!</h5><p>We look forward to seeing you.</p>");
-			//$("#modalCenter").modal('show');
 			submitAttendingResponse(formToProcess, a);
-			var elmnt = document.getElementById('rsvp');
-			elmnt.scrollIntoView({behavior: 'smooth'});
-			//div.html('<span ><div class="spinner-border"></div></span>');
 		}
 
 	}
@@ -600,10 +614,7 @@ function parseForm(form, div){
 }
 
 
-function validateRSVPForm(form){
-
-	var formToProcess = form.serializeArray();
-	
+function validateRSVPForm(formToProcess){
 
 	if(formToProcess.length != 4){
 		return false;
