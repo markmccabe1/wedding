@@ -722,7 +722,7 @@ function updateRecord(jsondata, id){
 function showAdminTable(){
 	console.log("getUsers()");
 	var query = {}; // get all records
-	var hints = {"$max": 130, "$orderby": {"surname": 1}}; // top ten, sort by creation id in descending order
+	var hints = {"$max": 136, "$orderby": {"surname": 1}}; // top ten, sort by creation id in descending order
 	db = new restdb("60834b7328bf9b609975a5f9", null);
 	db.attendee.find(query, hints, function(err, res){
 	  if (!err){
