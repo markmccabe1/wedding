@@ -114,18 +114,12 @@ function findUser(){
 	var forename = nameArray[0];
 	var surname = nameArray[1];
 
-
-	console.log("getUser" + forename + surname);
-
 	var query = {"forname" : forename, "surname": surname}; // get all records
 	var hints = {"$max": 10, "$orderby": {"_id": -1}}; // top ten, sort by creation id in descending order
 	db = new restdb("60834b7328bf9b609975a5f9", null);
 	db.attendee.find(query, hints, function(err, res){
 	  if (!err){
 	  	attendee = res[0];
-	  	console.log("new attendee");
-	  	console.log(attendee);
-
 
 	  	if(attendee != null){
 	  		setAttendee();
@@ -133,7 +127,6 @@ function findUser(){
 			getUserGroup();
 
 			if(attendee['forname'] == "Admin" && attendee['surname'] == "User"){
-				console.log("show admin table");
 				showAdminTable();
 			}
 			
@@ -161,12 +154,9 @@ function getUserGroup(){
 	userGroup = [];
 
 	if(attendee == null){
-		console.log("attendee null");
 		return;
 	}
 	var group = attendee['group'];
-	console.log(group);
-
 	if(group == ""){
 		userGroup = [attendee];
 		generateRSVP();
@@ -196,9 +186,6 @@ $(document).on("change", ".attendingSelect", function() {
 
   var formButton = "#" + form.replace("Form", "Submit");
   var hiddenFormItems = "#" + form.replace("Form", "Items");
-
-  console.log(formButton + hiddenFormItems);
-
 
 		if(attendingInput === "Yes"){
 			$(hiddenFormItems).show();
@@ -271,7 +258,6 @@ function checkExistingSession(){
 		getUserGroup();
 
 		if(forename == "Admin" && surname == "User"){
-			console.log("loaded existing user");
 			showAdminTable();
 		}
 	}
@@ -284,8 +270,6 @@ function checkExistingSession(){
 function generateRSVP(){
 	
 	var group = userGroup;
-	console.log("group");
-	console.log(group);
 
 	if(group != null){
 				
@@ -295,24 +279,21 @@ function generateRSVP(){
 
 		for(i;i<group.length; i++){
 			var a = group[i];
-			console.log("found group member");
-			console.log(a);
 
 			if(a['attending'] === "Yes"){
-				$("#dynamicInput").append(createAttending(a['forname'], a['surname'], a['starter'], a['main'], a['allergies'], a['_id']));
-				console.log("yes");
+				$("#dynamicInput").append(createAttending(a['forname'], a['surname'], a['starter'], a['main'], a['allergies'], a['type'], a['_id']));
+				if(a['type'] == 'child'){
+					updateChildAttending(a['_id']);
+				}
 			}
 			if(a['attending'] === "No"){
 				$("#dynamicInput").append(createNotAttending(a['forname'], a['surname'], a['_id']));
-				console.log("Not");
 			}
 			if(a['attending'] === ""){
 				$("#dynamicInput").append(createForm(a['forname'], a['surname'], a['_id'], a['type']));
 				if(a['type'] == 'child'){
-					updateChildSelect(a['_id'])
+					updateChildSelect(a['_id']);
 				}
-
-				console.log("reply");
 			}
 		}
 	}
@@ -335,6 +316,14 @@ function updateChildSelect(id){
 	$(select).append(o);
 	$(select).append(o1);
 	$(select).append(o2);
+}
+
+function updateChildAttending(id){
+	$("#"+id+"StarterHeader").hide();
+	$("#"+id+"StarterValue").hide();
+
+	$("#"+id+"DessertValue").html("Ice Cream");
+
 }
 
 
@@ -475,7 +464,7 @@ function createForm(forename, surname, id, type){
 
 }
 
-function createAttending(forename, surname, starter, main, allergy, id){
+function createAttending(forename, surname, starter, main, allergy, type, id){
 	var attending = $("#AttendingCard").html();
 	var borderSpecial = id+"borderSpecial";
 
@@ -483,6 +472,9 @@ function createAttending(forename, surname, starter, main, allergy, id){
 		allergy = "None";
 	}
     var replacementDiv = id+"Div";
+    var replacementStarterHeader = id+"StarterHeader";
+    var replacementStarterValue = id+"StarterValue";
+    var replacementDessertValue = id+"DessertValue";
 
     attending = attending.replace("$name$", forename + " " + surname);
     attending = attending.replace("$divName$", replacementDiv);
@@ -492,7 +484,9 @@ function createAttending(forename, surname, starter, main, allergy, id){
 	attending = attending.replace("$allergyVal$", allergy);
 	attending = attending.replace("$id$", id);
 	attending = attending.replace("$specialBorder$", borderSpecial);
-
+	attending = attending.replace("$starterHeader", replacementStarterHeader);
+	attending = attending.replace("$starterValue", replacementStarterValue);
+	attending = attending.replace("$dessertValue", replacementDessertValue);
 
 	return attending;
 
@@ -525,10 +519,6 @@ $(document).on("click", ".clickable", function() {
 
 	offsetDiv = $(collapsedDiv).offset();
 	windowOffset = $(window).scrollTop();
-
-	console.log("offsetDiv");
-	console.log(offsetDiv );
-	console.log(windowOffset);
 
  });
 
@@ -598,15 +588,12 @@ function parseForm(form, div){
 
 	var formToProcess = form.serializeArray()
 
-	var attending = formToProcess[0].value;
-
-    
+	var attending = formToProcess[0].value;    
 
 	if(attending === 'No'){
 
 		submitNotAttendingResponse(a);
 		return true;
-		//div.html('<span ><div class="spinner-border"></div></span>');
 
 	}
 	if(attending === 'Yes'){
@@ -623,23 +610,14 @@ function parseForm(form, div){
 
 function validateRSVPForm(formToProcess){
 
-	if(formToProcess.length != 4){
+	if(formToProcess.length != 3){
 		return false;
 	}
 	var attending = formToProcess[0].value;
-	var starter = formToProcess[1].value;
-	var main = formToProcess[2].value;
-	var allergy = formToProcess[3].value;
+	var main = formToProcess[1].value;
+	var allergy = formToProcess[2].value;
 
 	if(attending != 'Yes'){
-		return false;
-	}
-
-	if(starter === '' ){
-
-		$("#modalTitle").html("<h5>Whoops...</h5>");
-		$("#modalText").html("<p>Please select a Starter</p>");
-		$("#modalCenter").modal('show');
 		return false;
 	}
 
@@ -666,15 +644,13 @@ function submitNotAttendingResponse(attendeeFromForm){
 function submitAttendingResponse(form, attendeeFromForm){
 
 	var attending = form[0].value;
-	var starter = form[1].value;
-	var main = form[2].value;
-	var allergy = form[3].value;
-	console.log("form")
-	console.log(attending);
-	console.log(starter);
-	console.log(main);
-	console.log(allergy);
-	console.log(form);
+	var starter = "";
+	var main = form[1].value;
+	var allergy = form[2].value;
+
+	if(attendeeFromForm['type'] == "adult"){
+		starter = "Potato & Leek Soup"
+	}
 
 	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"Yes","starter":starter,"main":main,"allergies":allergy,"group":attendeeFromForm['group']};
 	updateRecord(jsondata, attendeeFromForm['_id']);
@@ -711,8 +687,6 @@ function updateRecord(jsondata, id){
 	}
 
 	$.ajax(settings).done(function (response) {
-		console.log(response);
-		console.log("response from ajax call");
 	  	refreshRSVP();
 	});
 
@@ -720,13 +694,11 @@ function updateRecord(jsondata, id){
 }
 
 function showAdminTable(){
-	console.log("getUsers()");
 	var query = {}; // get all records
 	var hints = {"$max": 136, "$orderby": {"surname": 1}}; // top ten, sort by creation id in descending order
 	db = new restdb("60834b7328bf9b609975a5f9", null);
 	db.attendee.find(query, hints, function(err, res){
 	  if (!err){
-	    console.log("users retrieved");
 	    var attendees = res;
 	    populateTable(attendees);
 	    
