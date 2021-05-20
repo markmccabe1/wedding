@@ -304,11 +304,11 @@ function updateChildSelect(id){
 
 	var select = $("#"+id+"mainSelect");
 
-	var o = new Option("Chicken Nuggets", "Chicken Nuggets");
-	$(o).html("Chicken Nuggets");
+	var o = new Option("Chicken Goujons", "Chicken Goujons");
+	$(o).html("Chicken Goujons");
 
-	var o1 = new Option("Hanburger", "Hamburger");
-	$(o1).html("Hamburger");
+	var o1 = new Option("Mini Hanburger", "Mini Hamburger");
+	$(o1).html("Mini Hamburger");
 
 	var o2 = new Option("Sausages", "Sausages");
 	$(o2).html("Sausages");
@@ -319,8 +319,7 @@ function updateChildSelect(id){
 }
 
 function updateChildAttending(id){
-	$("#"+id+"StarterHeader").hide();
-	$("#"+id+"StarterValue").hide();
+
 
 	$("#"+id+"DessertValue").html("Ice Cream");
 
@@ -644,13 +643,9 @@ function submitNotAttendingResponse(attendeeFromForm){
 function submitAttendingResponse(form, attendeeFromForm){
 
 	var attending = form[0].value;
-	var starter = "";
+	var starter = "Potato & Leek Soup";
 	var main = form[1].value;
-	var allergy = form[2].value;
-
-	if(attendeeFromForm['type'] == "adult"){
-		starter = "Potato & Leek Soup"
-	}
+	var allergy = form[2].value;	
 
 	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"Yes","starter":starter,"main":main,"allergies":allergy,"group":attendeeFromForm['group']};
 	updateRecord(jsondata, attendeeFromForm['_id']);
