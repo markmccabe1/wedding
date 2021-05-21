@@ -9587,7 +9587,7 @@ hr.light {
 }
 
 .page-section {
-  padding: 8rem 0;
+  padding: 4rem 0;
 }
 
 #mainNav {
@@ -9657,7 +9657,7 @@ hr.light {
 
 header.masthead {
   padding-top: 8rem;
-  padding-bottom: calc(10rem - 72px);
+  padding-bottom: 4rem;
   background:  url("../img/bg-masthead.jpg") ; 
   background-position: center;
   background-repeat: no-repeat;
@@ -9675,7 +9675,7 @@ header.masthead h1 {
     height: 100vh;
     min-height: 40rem;
     padding-top: 72px;
-    padding-bottom: calc(10rem - 72px);
+    padding-bottom: 4rem;
 
   }
   header.masthead p {
