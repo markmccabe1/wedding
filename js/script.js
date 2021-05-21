@@ -19,6 +19,14 @@ $( document ).ready(function() {
 		$("#loginForm").hide();
 		onFormSubmit();
 	});
+
+	$( "#loginForm" ).submit(function( event ) {
+	 	 event.preventDefault();
+	  	$("#spinner").show();
+		$("#loginForm").hide();
+		onFormSubmit();
+
+	});
 	
 	$("#signOutButton").click(function(){
 		removeAttendee();
