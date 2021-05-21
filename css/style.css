@@ -31,6 +31,7 @@
     padding: 0.375rem 0.75rem;
     line-height: 1.5;
     border-radius: 0.25rem;
+    box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
 }
 
 
@@ -39,8 +40,12 @@
 	border-color: #005777;
 	color: #005777;
 	border-style: solid;
-	border-width: 1px;
+	border-width: 0.2px;
   	border-radius: 8px;
+  	box-shadow: 3px 3px 5px rgba(0,0,0,0.2);
+  	margin-top: 5px;
+    margin-bottom: 5px;
+
 }
 
 .borderTop{
@@ -60,4 +65,19 @@
 
 .menuPadding{
 	padding-top:20px;
+	font-family: "Courier", monospace !important;  
+	font-size: 1.1rem;
+}
+
+.shadded{
+  box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+}
+.btn{
+	  	box-shadow: 3px 3px 5px rgba(0,0,0,0.2);
+
+}
+
+.helpButton{
+	padding: 0.75rem 2rem !important;
+    border-radius: 10rem !important;
 }

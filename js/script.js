@@ -16,6 +16,7 @@ $( document ).ready(function() {
 	
 	$("#enterbtn").click(function(){
 		$("#spinner").show();
+		$("#loginForm").hide();
 		onFormSubmit();
 	});
 	
@@ -61,9 +62,12 @@ function isInvalidString(str){
 function onFormSubmit(){
 	if(validateForm()){
 		findUser();
+
 	}
 	else{
 		blankFields();
+		$("#loginForm").show();
+
 	}
 }
 
@@ -78,28 +82,28 @@ function validateForm(){
 	var code = $("#codeInput").val().toLowerCase();
 	
 	if(isInvalidString(forename)){
-		showToast("Invalid Forename. Please try again");
+		showModal("Invalid Forename. Please try again");
 		return false;
 	}
 
 	if(isInvalidString(surname)){
-		showToast("Invalid Surname. Please try again");
+		showModal("Invalid Surname. Please try again");
 		return false;
 	}
 	
 	if(isInvalidString(code)){
-		showToast("Invalid Code. Please try again");
+		showModal("Invalid Code. Please try again");
 		return false;
 	}
 	
 	if($user == null || $user === ""){
-		showToast("Invalid Name. Please try again");
+		showModal("Invalid Name. Please try again");
 		return false;
 	}
 
 	if(code != "2bmccabe"){
 
-		showToast("Invalid Code. Please try again");
+		showModal("Invalid Code. Please try again");
 		return false;
 	}
 
@@ -139,7 +143,9 @@ function findUser(){
 		  	}
 	  	}
 	  	else{
-	  		showBodyToast("Can't find "+ $user +".");
+	  		showModal("Can't find "+ $user +".");
+	  		$("#loginForm").show();
+
 	  		blankFields();
 	  	}
 
@@ -211,7 +217,6 @@ $(document).on("change", ".attendingSelect", function() {
 
 function blankFields(){
 	$user = "";
-	$("#loginForm").trigger("reset");
 	$("#spinner").hide();
     $validationMessage = "";
 	loadCounter = 0;
@@ -326,6 +331,7 @@ function updateChildAttending(id){
 }
 
 
+
 function calculateWeddingCountdown(){
     
     //Get today's date.
@@ -385,6 +391,8 @@ function showLogin(){
 		$("#spinner").hide();
 		$("#access").show();
 		$("#content").hide();
+		$("#loginForm").show();
+		$("#loginForm").trigger("reset");
 }
 
 function setAttendee(){
@@ -622,15 +630,19 @@ function validateRSVPForm(formToProcess){
 
 	if(main === '' ){
 
-		$("#modalTitle").html("<h5>Whoops...</h5>");
-		$("#modalText").html("<p>Please select a Main Course</p>");
-		$("#modalCenter").modal('show');
+		showModal("Please select a Main Course");
 
 		return false;
 	}
 
 	return true;
 
+}
+
+function showModal(text){
+	$("#modalTitle").html("<h5>Whoops...</h5>");
+	$("#modalText").html("<p>"+text+"</p>");
+	$("#modalCenter").modal('show');
 }
 
 function submitNotAttendingResponse(attendeeFromForm){
