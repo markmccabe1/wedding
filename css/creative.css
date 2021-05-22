@@ -9669,6 +9669,7 @@ header.masthead h1 {
   color:#005777 !important;
   font-size:17vw;
   font-family: 'Brush Script MT', cursive;
+  font-weight: normal;
 }
 
 @media (min-width: 992px) {
