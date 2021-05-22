@@ -21,7 +21,7 @@ $( document ).ready(function() {
 	});
 
 	$( "#loginForm" ).submit(function( event ) {
-	 	 event.preventDefault();
+	 	event.preventDefault();
 	  	$("#spinner").show();
 		$("#loginForm").hide();
 		onFormSubmit();
