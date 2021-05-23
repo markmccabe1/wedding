@@ -645,7 +645,7 @@ function showModal(text){
 
 function submitNotAttendingResponse(attendeeFromForm){
 
-	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"No","starter":"","main":"","allergies":"","group":attendeeFromForm['group'], "username": attendeeFromForm['username'], "updatedby": $username};
+	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"No","starter":"","main":"","allergies":"","group":attendeeFromForm['group'], "username": attendeeFromForm['username'], "updatedby": $username, "updateTime" : new Date().toISOString()};
 	updateRecord(jsondata, attendeeFromForm['_id']);
 
 }
@@ -657,14 +657,13 @@ function submitAttendingResponse(form, attendeeFromForm){
 	var main = form[1].value;
 	var allergy = form[2].value;	
 
-	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"Yes","starter":starter,"main":main,"allergies":allergy,"group":attendeeFromForm['group'], "username": attendeeFromForm['username'], "updatedby": $username};
+	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"Yes","starter":starter,"main":main,"allergies":allergy,"group":attendeeFromForm['group'], "username": attendeeFromForm['username'], "updatedby": $username, "updateTime" : new Date().toISOString()};
 	updateRecord(jsondata, attendeeFromForm['_id']);
 	
 }
 
 function resetRsvp(attendeeFromForm){
-
-	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"","starter":"","main":"","allergies":"","group":attendeeFromForm['group'], "username": attendeeFromForm['username'], "updatedby": $username};
+	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"","starter":"","main":"","allergies":"","group":attendeeFromForm['group'], "username": attendeeFromForm['username'], "updatedby": $username, "updateTime" : new Date().toISOString()};
 	updateRecord(jsondata, attendeeFromForm['_id']);
 }
 
@@ -733,7 +732,22 @@ function populateTable(attendees){
 }
 
 function addRow(attendee){
-	var row = "<tr><td>"+attendee['forname']+"</td><td>"+attendee['surname']+"</td><td>"+attendee['attending']+"</td><td>"+attendee['starter']+"</td><td>"+attendee['main']+"</td><td>"+attendee['allergies']+"</td></tr>";
+
+	var updateBy = "";
+	var updateTime = "";
+
+	if(attendee['updatedby'] != null){
+		updateBy = attendee['updatedby']
+	}
+
+	if(attendee['updateTime'] != null){
+		updateTime = attendee['updateTime']
+	}
+
+
+
+	var row = "<tr><td>"+attendee['forname']+"</td><td>"+attendee['surname']+"</td><td>"+attendee['attending']+"</td><td>"+attendee['starter']+"</td><td>"+attendee['main']+"</td><td>"+attendee['allergies']+"</td><td>"+attendee['username']+"</td><td>"+updateBy+"</td><td>"+updateTime+"</td></tr>";
+	console.log(row);
 	$("#tableBody").append(row);
 }
 
