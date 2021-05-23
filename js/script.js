@@ -13,12 +13,6 @@ $( document ).ready(function() {
 	$("#tableOfUsers").hide();
 	checkExistingSession()
 	calculateWeddingCountdown();
-	
-	$("#enterbtn").click(function(){
-		$("#spinner").show();
-		$("#loginForm").hide();
-		onFormSubmit();
-	});
 
 	$( "#loginForm" ).submit(function( event ) {
 	 	event.preventDefault();
@@ -57,7 +51,7 @@ function sanitizeString(str){
 }
 
 function isInvalidString(str){
-	  var letters = /^[0-9a-zA-Z]+$/;
+	  var letters = /^[a-zA-Z].*[\s\.]*$/g;
 	  if (letters.test(str)) {
 	    return false;
 	  } else {
@@ -99,11 +93,6 @@ function validateForm(){
 		return false;
 	}
 	
-	if(isInvalidString(code)){
-		showModal("Invalid Code. Please try again");
-		return false;
-	}
-	
 	if($user == null || $user === ""){
 		showModal("Invalid Name. Please try again");
 		return false;
@@ -121,10 +110,14 @@ function validateForm(){
 
 function findUser(){
 	
-	
 	var nameArray = $user.split(" ");
 	var forename = nameArray[0];
 	var surname = nameArray[1];
+	
+	if(nameArray.length == 3){
+		var forename = nameArray[0]+" "+nameArray[1];
+		var surname = nameArray[2];
+	}
 
 	var query = {"forname" : forename, "surname": surname}; // get all records
 	var hints = {"$max": 10, "$orderby": {"_id": -1}}; // top ten, sort by creation id in descending order
@@ -178,7 +171,7 @@ function getUserGroup(){
 	else{
 		var query = {"group" : group}; // get all records
 
-		var hints = {"$max": 10, "$orderby": {"_id": -1}}; // top ten, sort by creation id in descending order
+		var hints = {"$max": 10, "$orderby": {"forname": 1}}; // top ten, sort by creation id in descending order
 		db = new restdb("60834b7328bf9b609975a5f9", null);
 		db.attendee.find(query, hints, function(err, res){
 		  if (!err){
@@ -391,6 +384,7 @@ function showContentImmediately(){
 		$("#access").hide();
 		$(".hiddenFormItems").hide();
 		$("#rsvpspinner").show();
+		$("html, body").animate({scrollTop: $("#content").offset().top});
 	
 }
 
@@ -680,7 +674,6 @@ function resetRsvp(attendeeFromForm){
 
 
 function refreshRSVP(){
-
 	getUserGroup();
 
 }
@@ -710,7 +703,7 @@ function updateRecord(jsondata, id){
 
 function showAdminTable(){
 	var query = {}; // get all records
-	var hints = {"$max": 136, "$orderby": {"surname": 1}}; // top ten, sort by creation id in descending order
+	var hints = {"$max": 150, "$orderby": {"surname": 1}}; // top ten, sort by creation id in descending order
 	db = new restdb("60834b7328bf9b609975a5f9", null);
 	db.attendee.find(query, hints, function(err, res){
 	  if (!err){
