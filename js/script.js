@@ -1,5 +1,6 @@
 
 var $user = "";
+var $username = "";
 var loadCounter = 0;
 var db = null;
 var attendee = null;
@@ -44,11 +45,6 @@ Element.prototype.documentOffsetTop = function () {
 			    return this.offsetTop + ( this.offsetParent ? this.offsetParent.documentOffsetTop() : 0 );
 };
 
-
-function sanitizeString(str){
-    str = str.replace(/[^a-z0-9‡Ž’—œ–Ÿ \.,_-]/gim,"");
-    return str.trim();
-}
 
 function isInvalidString(str){
 	  var letters = /^[a-zA-Z].*[\s\.]*$/g;
@@ -104,22 +100,20 @@ function validateForm(){
 		return false;
 	}
 
+	$username = $user.replace(/\W/g, '').toLowerCase();
+
 	
 	return true;
 }
 
 function findUser(){
 	
-	var nameArray = $user.split(" ");
-	var forename = nameArray[0];
-	var surname = nameArray[1];
-	
-	if(nameArray.length == 3){
-		var forename = nameArray[0]+" "+nameArray[1];
-		var surname = nameArray[2];
+	if($username == null){
+		console.log("invalud username");
+		return;
 	}
 
-	var query = {"forname" : forename, "surname": surname}; // get all records
+	var query = {"username" : $username}; // get all records
 	var hints = {"$max": 10, "$orderby": {"_id": -1}}; // top ten, sort by creation id in descending order
 	db = new restdb("60834b7328bf9b609975a5f9", null);
 	db.attendee.find(query, hints, function(err, res){
@@ -218,6 +212,7 @@ $(document).on("change", ".attendingSelect", function() {
 
 function blankFields(){
 	$user = "";
+	$username = "";
 	$("#spinner").hide();
     $validationMessage = "";
 	loadCounter = 0;
@@ -259,6 +254,7 @@ function checkExistingSession(){
 
 	if(forename != null && surname != null){
 		$user = forename+" " + surname;
+		$username = $user.replace(/\W/g, '').toLowerCase();
 		attendee = JSON.parse(tempAttendee);
 		showContentImmediately();
 		getUserGroup();
@@ -313,8 +309,8 @@ function updateChildSelect(id){
 	var o = new Option("Chicken Goujons", "Chicken Goujons");
 	$(o).html("Chicken Goujons");
 
-	var o1 = new Option("Mini Hanburger", "Mini Hamburger");
-	$(o1).html("Mini Hamburger");
+	var o1 = new Option("Mini Beef Burger", "Mini Beef Burger");
+	$(o1).html("Mini Beef Burger");
 
 	var o2 = new Option("Sausages", "Sausages");
 	$(o2).html("Sausages");
@@ -649,7 +645,7 @@ function showModal(text){
 
 function submitNotAttendingResponse(attendeeFromForm){
 
-	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"No","starter":"","main":"","allergies":"","group":attendeeFromForm['group']};
+	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"No","starter":"","main":"","allergies":"","group":attendeeFromForm['group'], "username": attendeeFromForm['username'], "updatedby": $username};
 	updateRecord(jsondata, attendeeFromForm['_id']);
 
 }
@@ -661,14 +657,14 @@ function submitAttendingResponse(form, attendeeFromForm){
 	var main = form[1].value;
 	var allergy = form[2].value;	
 
-	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"Yes","starter":starter,"main":main,"allergies":allergy,"group":attendeeFromForm['group']};
+	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"Yes","starter":starter,"main":main,"allergies":allergy,"group":attendeeFromForm['group'], "username": attendeeFromForm['username'], "updatedby": $username};
 	updateRecord(jsondata, attendeeFromForm['_id']);
 	
 }
 
 function resetRsvp(attendeeFromForm){
 
-	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"","starter":"","main":"","allergies":"","group":attendeeFromForm['group']};
+	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"","starter":"","main":"","allergies":"","group":attendeeFromForm['group'], "username": attendeeFromForm['username'], "updatedby": $username};
 	updateRecord(jsondata, attendeeFromForm['_id']);
 }
 
