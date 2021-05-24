@@ -85,3 +85,64 @@
 	padding: 0.75rem 2rem !important;
     border-radius: 10rem !important;
 }
+
+.myTablePage{
+  font-weight: bold;
+  padding-top: 8rem;
+  padding-bottom: 4rem;
+  background:  url("../img/bg-masthead.jpg") ; 
+  background-position: center;
+  background-repeat: repeat;
+  background-attachment: scroll;
+  background-size: cover;
+  min-height: 1000px;
+}
+
+.myTable{
+	text-align:center;
+    display:inline-block;
+	width:100%;
+}
+
+.tableh1{
+  color:#005777 !important;
+  font-family: 'Brush Script MT', cursive;
+  font-size :5rem;
+
+}
+
+.myChair {
+
+	width: 302px;
+	border: 1px solid #005777;
+	background: white;
+	text-align: left;
+	padding:20px;
+	border-radius: 30px;
+	color:#005777 !important;
+	box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+	display: inline-block;
+	margin:5px;
+}
+
+#tableDiv{
+	width:400px;
+	margin: auto;
+}
+
+.myHeader{
+	border: 1px solid #005777;
+	background: white;
+	text-align: left;
+	padding:20px;
+	border-radius: 30px;
+	color:#005777 !important;
+	box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+	margin:5px;
+}
+
+
+
+
+
+
