@@ -39,6 +39,14 @@ $( document ).ready(function() {
 		    });
 	  	});
 
+	$(document).on("click", "#statsBtn", function() {
+		window.location.replace("./stats.html");
+	});
+
+	$(document).on("click", "#adminBtn", function() {
+		window.location.replace("./admin.html");
+	});
+
 });
 
 Element.prototype.documentOffsetTop = function () {
@@ -381,7 +389,6 @@ function showContentImmediately(){
 		$(".hiddenFormItems").hide();
 		$("#rsvpspinner").show();
 		$("html, body").animate({scrollTop: $("#content").offset().top});
-	
 }
 
 function showLogin(){
@@ -697,58 +704,10 @@ function updateRecord(jsondata, id){
 }
 
 function showAdminTable(){
-	var query = {}; // get all records
-	var hints = {"$max": 150, "$orderby": {"surname": 1}}; // top ten, sort by creation id in descending order
-	db = new restdb("60834b7328bf9b609975a5f9", null);
-	db.attendee.find(query, hints, function(err, res){
-	  if (!err){
-	    var attendees = res;
-	    populateTable(attendees);
-	    
-	  }else{
-	  	console.log("users not retrieved");
-	  }
-	});
 
-}
+	$("#myNavBar").append("<li class='nav-item js-scroll-trigger'> <a class='nav-link js-scroll-trigger' id='adminBtn'>Admin</a></li>"+
+		"<li class='nav-item'> <a class='nav-link js-scroll-trigger' id='statsBtn'>Stats</a></li>");
 
-function populateTable(attendees){
-	for(var i=0;i<attendees.length; i++){
-		addRow(attendees[i]);
-	}
-
-	$('#myTable').DataTable({
-    ordering: true,
-    searching:false,
-    paging: false,
-    rowReorder: {
-            selector: 'td'
-        },
-    responsive: true
-	});
-
-
-	$("#tableOfUsers").show();
-}
-
-function addRow(attendee){
-
-	var updateBy = "";
-	var updateTime = "";
-
-	if(attendee['updatedby'] != null){
-		updateBy = attendee['updatedby']
-	}
-
-	if(attendee['updateTime'] != null){
-		updateTime = attendee['updateTime']
-	}
-
-
-
-	var row = "<tr><td>"+attendee['forname']+"</td><td>"+attendee['surname']+"</td><td>"+attendee['attending']+"</td><td>"+attendee['starter']+"</td><td>"+attendee['main']+"</td><td>"+attendee['allergies']+"</td><td>"+attendee['username']+"</td><td>"+updateBy+"</td><td>"+updateTime+"</td></tr>";
-	console.log(row);
-	$("#tableBody").append(row);
 }
 
 

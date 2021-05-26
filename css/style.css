@@ -142,6 +142,28 @@
 }
 
 
+.myNum{
+	width: 33%;
+	border: 1px solid #005777;
+	background: white;
+	text-align: center;
+	padding:5px;
+	border-radius: 30px;
+	color:#005777 !important;
+	box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+	display: inline-block;
+	margin:5px;
+}
+
+.statsTable{
+	overflow: auto;
+	height:90%;
+}
+
+
+
+
+
 
 
 
