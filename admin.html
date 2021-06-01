@@ -26,29 +26,38 @@
 
 <body id="page-top">
     <div>
+
+        <nav class="navbar navbar-expand-lg text-muted navbar-light fixed-top py-3" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" id="userDisplay"></a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto my-2 my-lg-0" id = "myNavBar">
+                        <li class="nav-item">
+                            <a id="homeBtn" class="nav-link js-scroll-trigger text-muted" href="#">Homepage</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="statsBtn" class="nav-link js-scroll-trigger text-muted" href="#">Stats</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
         <section class = "page-section"id ="adminforbidden">
             <div>
                 <h1>Not Allowed!</h1>
                 <h3>Sorry you need to be an admin to view this page</h3>
             </div>
         </section>
-        <section class="page-section " id="mainNav" hidden>
-        </section>
         <section class="page-section" id="tableOfUsers">
             <div class="container">
-                <div class = "row">
-                    <div id = "homeBtn" class = "col-4 btn btn-xl btn-outline-primary">
-                        To Homepage
-                    </div>
-                    <div id = "statsBtn" class = "col-4  ml-auto btn btn-xl btn-primary">
-                        To Stats
-                    </div>
-                </div>
                 <div  id = "adminspinner" class="container text-center">
                     <div class="spinner-border"></div>
                 </div>
                 <br>
-                <div class="row ">
+                <div class="row statsTable">
                     <div class="col">
                         <h2 class="mt-0 text-center">Table of Attendees</h2>
                         <hr class="divider my-4">

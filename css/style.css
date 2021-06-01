@@ -102,6 +102,7 @@
 	text-align:center;
     display:inline-block;
 	width:100%;
+	overflow: auto;
 }
 
 .tableh1{
