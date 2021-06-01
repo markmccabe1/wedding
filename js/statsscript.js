@@ -133,7 +133,16 @@ function getData(){
 
 function addRow(attendee){
 
-	var row = "<tr><td>"+attendee['forname']+" "+attendee['surname']+"</td><td>"+attendee['attending']+"</td><td>"+attendee['main']+"</td><td>"+attendee['allergies']+"</td></tr>"
+	var color = "";
+
+	if(attendee['attending'] == "Yes"){
+		color = "Green";
+	}
+	if(attendee['attending'] == "No"){
+		color = "Red";
+	}
+
+	var row = "<tr style='color:"+color+"'><td>"+attendee['forname']+" "+attendee['surname']+"</td><td>"+attendee['main']+"</td><td>"+attendee['allergies']+"</td></tr>"
 	$("#statsTableBody").append(row);
 }
 
