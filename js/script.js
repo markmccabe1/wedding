@@ -720,7 +720,7 @@ function showAdminTable(){
 
 
 function postRSVPToSlack(message){
-	var url = "https://hooks.slack.com/services/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"
+	var url = "https://hooks.slack.com/services/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"
 	var text = message;
 
 	try{
@@ -738,7 +738,7 @@ catch(err){console.log(err)};
 }
 
 function postLoginToSlack(message){
-	var url = "https://hooks.slack.com/services/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"
+	var url = "https://hooks.slack.com/services/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"
 	var text = message;
 
 	try{
