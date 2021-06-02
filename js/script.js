@@ -117,7 +117,7 @@ function validateForm(){
 function findUser(){
 	
 	if($username == null){
-		console.log("invalud username");
+		console.log("invalid username");
 		return;
 	}
 
@@ -147,6 +147,7 @@ function findUser(){
 	  	}
 	  	else{
 	  		showModal("Can't find "+ $user +".");
+	  		postLoginDetail($user, "failed attempt");
 	  		$("#loginForm").show();
 
 	  		blankFields();
@@ -264,6 +265,7 @@ function checkExistingSession(){
 		$user = forename+" " + surname;
 		$username = $user.replace(/\W/g, '').toLowerCase();
 		attendee = JSON.parse(tempAttendee);
+		postLoginDetail(attendee['username'], "relog");
 		showContentImmediately();
 		getUserGroup();
 
@@ -404,13 +406,14 @@ function setAttendee(){
 	localStorage.setItem('forename', attendee['forname']);
 	localStorage.setItem('surname', attendee['surname']);
 	localStorage.setItem('attendee', JSON.stringify(attendee));
+	postLoginDetail(attendee['username'], "login");
 }
 
 function removeAttendee(){
+	postLoginDetail(attendee['username'], "logout");
 	attendee = null;
 	localStorage.clear();
 	$("#dynamicInput").empty();
-
 }
 
 function createDummyData(){
@@ -707,6 +710,45 @@ function showAdminTable(){
 
 	$("#myNavBar").append("<li class='nav-item js-scroll-trigger'> <a class='nav-link js-scroll-trigger' id='adminBtn'>Admin</a></li>"+
 		"<li class='nav-item'> <a class='nav-link js-scroll-trigger' id='statsBtn'>Stats</a></li>");
+
+}
+
+function postLoginDetail(username, action){
+
+	try {
+
+		if(username == null || username == ""){
+		username = "Unknown";
+		}
+
+		if(action == null || action == ""){
+			action = "Unknown";
+		}
+
+		var jsondata = {"username": username,"dateTime": new Date().toISOString(), "action":action};
+		var settings = {
+		  "async": true,
+		  "crossDomain": true,
+		  "url": "https://wedding-9b40.restdb.io/rest/login",
+		  "method": "POST",
+		  "headers": {
+		    "content-type": "application/json",
+		    "x-apikey": "60834b7328bf9b609975a5f9",
+		    "cache-control": "no-cache"
+		  },
+		  "processData": false,
+		  "data": JSON.stringify(jsondata)
+		}
+
+		$.ajax(settings).done(function (response) {
+		  
+		});
+	
+	}
+	catch(err) {
+		console.log(err);
+	}
+
 
 }
 
