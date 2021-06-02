@@ -720,7 +720,7 @@ function showAdminTable(){
 
 
 function postRSVPToSlack(message){
-	var url = "https://hooks.slack.com/services/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"
+	var url = "https://hooks.slack.com/services/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"
 	var text = message;
 
 	try{
@@ -731,14 +731,16 @@ function postRSVPToSlack(message){
 	    dataType: 'json',
 	    processData: false,
 	    type: 'POST',
-	    url: url
+	    url: url,
+	    crossDomain:true,
+	    
 	});
 }
 catch(err){console.log(err)};
 }
 
 function postLoginToSlack(message){
-	var url = "https://hooks.slack.com/services/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"
+	var url = "https://hooks.slack.com/services/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"
 	var text = message;
 
 	try{
