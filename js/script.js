@@ -147,7 +147,7 @@ function findUser(){
 	  	}
 	  	else{
 	  		showModal("Can't find "+ $user +".");
-	  		postLoginDetail($user, "failed attempt");
+	  		postLoginToSlack("Failed Login : "+ $user);
 	  		$("#loginForm").show();
 
 	  		blankFields();
@@ -265,7 +265,7 @@ function checkExistingSession(){
 		$user = forename+" " + surname;
 		$username = $user.replace(/\W/g, '').toLowerCase();
 		attendee = JSON.parse(tempAttendee);
-		postLoginDetail(attendee['username'], "relog");
+		postLoginToSlack("Re Login : " + $user);
 		showContentImmediately();
 		getUserGroup();
 
@@ -406,11 +406,11 @@ function setAttendee(){
 	localStorage.setItem('forename', attendee['forname']);
 	localStorage.setItem('surname', attendee['surname']);
 	localStorage.setItem('attendee', JSON.stringify(attendee));
-	postLoginDetail(attendee['username'], "login");
+	postLoginToSlack("Login : " + $user);
 }
 
 function removeAttendee(){
-	postLoginDetail(attendee['username'], "logout");
+	postLoginToSlack("Logout : "+$user);
 	attendee = null;
 	localStorage.clear();
 	$("#dynamicInput").empty();
@@ -657,6 +657,8 @@ function submitNotAttendingResponse(attendeeFromForm){
 
 	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"No","starter":"","main":"","allergies":"","group":attendeeFromForm['group'], "username": attendeeFromForm['username'], "updatedby": $username, "updateTime" : new Date().toISOString()};
 	updateRecord(jsondata, attendeeFromForm['_id']);
+	postRSVPToSlack("RSVP Not Attending : " + attendeeFromForm['forname']+ " "+attendeeFromForm['surname']);
+
 
 }
 
@@ -669,12 +671,15 @@ function submitAttendingResponse(form, attendeeFromForm){
 
 	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"Yes","starter":starter,"main":main,"allergies":allergy,"group":attendeeFromForm['group'], "username": attendeeFromForm['username'], "updatedby": $username, "updateTime" : new Date().toISOString()};
 	updateRecord(jsondata, attendeeFromForm['_id']);
+	postRSVPToSlack("RSVP Attending : " + attendeeFromForm['forname']+ " "+attendeeFromForm['surname']);
 	
 }
 
 function resetRsvp(attendeeFromForm){
 	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"","starter":"","main":"","allergies":"","group":attendeeFromForm['group'], "username": attendeeFromForm['username'], "updatedby": $username, "updateTime" : new Date().toISOString()};
 	updateRecord(jsondata, attendeeFromForm['_id']);
+	postRSVPToSlack("RSVP Reset : " + attendeeFromForm['forname']+ " "+attendeeFromForm['surname']);
+
 }
 
 
@@ -713,43 +718,41 @@ function showAdminTable(){
 
 }
 
-function postLoginDetail(username, action){
 
-	try {
+function postRSVPToSlack(message){
+	var url = "https://hooks.slack.com/services/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"
+	var text = message;
 
-		if(username == null || username == ""){
-		username = "Unknown";
-		}
+	try{
+	$.ajax({
+	    data: 'payload=' + JSON.stringify({
+	        "text": text
+	    }),
+	    dataType: 'json',
+	    processData: false,
+	    type: 'POST',
+	    url: url
+	});
+}
+catch(err){console.log(err)};
+}
 
-		if(action == null || action == ""){
-			action = "Unknown";
-		}
+function postLoginToSlack(message){
+	var url = "https://hooks.slack.com/services/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"
+	var text = message;
 
-		var jsondata = {"username": username,"dateTime": new Date().toISOString(), "action":action};
-		var settings = {
-		  "async": true,
-		  "crossDomain": true,
-		  "url": "https://wedding-9b40.restdb.io/rest/login",
-		  "method": "POST",
-		  "headers": {
-		    "content-type": "application/json",
-		    "x-apikey": "60834b7328bf9b609975a5f9",
-		    "cache-control": "no-cache"
-		  },
-		  "processData": false,
-		  "data": JSON.stringify(jsondata)
-		}
-
-		$.ajax(settings).done(function (response) {
-		  
-		});
-	
-	}
-	catch(err) {
-		console.log(err);
-	}
-
-
+	try{
+	$.ajax({
+	    data: 'payload=' + JSON.stringify({
+	        "text": text
+	    }),
+	    dataType: 'json',
+	    processData: false,
+	    type: 'POST',
+	    url: url
+	});
+}
+catch(err){console.log(err)};
 }
 
 
