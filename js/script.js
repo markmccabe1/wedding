@@ -147,7 +147,6 @@ function findUser(){
 	  	}
 	  	else{
 	  		showModal("Can't find "+ $user +".");
-	  		postLoginToSlack("Failed Login : "+ $user);
 	  		$("#loginForm").show();
 
 	  		blankFields();
@@ -265,7 +264,6 @@ function checkExistingSession(){
 		$user = forename+" " + surname;
 		$username = $user.replace(/\W/g, '').toLowerCase();
 		attendee = JSON.parse(tempAttendee);
-		postLoginToSlack("Re Login : " + $user);
 		showContentImmediately();
 		getUserGroup();
 
@@ -406,11 +404,9 @@ function setAttendee(){
 	localStorage.setItem('forename', attendee['forname']);
 	localStorage.setItem('surname', attendee['surname']);
 	localStorage.setItem('attendee', JSON.stringify(attendee));
-	postLoginToSlack("Login : " + $user);
 }
 
 function removeAttendee(){
-	postLoginToSlack("Logout : "+$user);
 	attendee = null;
 	localStorage.clear();
 	$("#dynamicInput").empty();
@@ -422,27 +418,6 @@ function createDummyData(){
 	$("#accordian").append(createAttending("Maeve", "Diamond", "Soup", "Beef", "None"));
 	$("#accordian").append(createNotAttending("Michael", "McCabe"));
 }
-
-/*function createForm(forename, surname){
-
-    var form = $("#ReplyCard").html();
-
-
-    var replacementDiv = forename+"-"+surname+"Form";
-    var replacementForm = forename+"-"+surname+"Form";
-	var replacementBtn = forename+"-"+surname+"Submit";
-	var replacementItems = forename+"-"+surname+"Items";
-
-
-    form = form.replace("$name$", forename + " " + surname);
-    form = form.replace("$divName$", replacementDiv);
-    form = form.replace("$formName$", replacementForm);
-	form = form.replace("$formSubmitBtn$", replacementBtn);
-	form = form.replace("$hiddenFormItems$", replacementItems);
-
-	return form;
-
-}*/
 
 function createForm(forename, surname, id, type){
 
@@ -657,8 +632,6 @@ function submitNotAttendingResponse(attendeeFromForm){
 
 	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"No","starter":"","main":"","allergies":"","group":attendeeFromForm['group'], "username": attendeeFromForm['username'], "updatedby": $username, "updateTime" : new Date().toISOString()};
 	updateRecord(jsondata, attendeeFromForm['_id']);
-	postRSVPToSlack("RSVP Not Attending : " + attendeeFromForm['forname']+ " "+attendeeFromForm['surname']);
-
 
 }
 
@@ -670,15 +643,13 @@ function submitAttendingResponse(form, attendeeFromForm){
 	var allergy = form[2].value;	
 
 	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"Yes","starter":starter,"main":main,"allergies":allergy,"group":attendeeFromForm['group'], "username": attendeeFromForm['username'], "updatedby": $username, "updateTime" : new Date().toISOString()};
-	updateRecord(jsondata, attendeeFromForm['_id']);
-	postRSVPToSlack("RSVP Attending : " + attendeeFromForm['forname']+ " "+attendeeFromForm['surname']);
-	
+	updateRecord(jsondata, attendeeFromForm['_id']);	
+
 }
 
 function resetRsvp(attendeeFromForm){
 	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"","starter":"","main":"","allergies":"","group":attendeeFromForm['group'], "username": attendeeFromForm['username'], "updatedby": $username, "updateTime" : new Date().toISOString()};
 	updateRecord(jsondata, attendeeFromForm['_id']);
-	postRSVPToSlack("RSVP Reset : " + attendeeFromForm['forname']+ " "+attendeeFromForm['surname']);
 
 }
 
@@ -717,46 +688,6 @@ function showAdminTable(){
 		"<li class='nav-item'> <a class='nav-link js-scroll-trigger' id='statsBtn'>Stats</a></li>");
 
 }
-
-
-function postRSVPToSlack(message){
-	var url = "https://hooks.slack.com/services/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"
-	var text = message;
-
-	try{
-	$.ajax({
-	    data: 'payload=' + JSON.stringify({
-	        "text": text
-	    }),
-	    dataType: 'json',
-	    processData: false,
-	    type: 'POST',
-	    url: url,
-	    crossDomain:true,
-	    
-	});
-}
-catch(err){console.log(err)};
-}
-
-function postLoginToSlack(message){
-	var url = "https://hooks.slack.com/services/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"
-	var text = message;
-
-	try{
-	$.ajax({
-	    data: 'payload=' + JSON.stringify({
-	        "text": text
-	    }),
-	    dataType: 'json',
-	    processData: false,
-	    type: 'POST',
-	    url: url
-	});
-}
-catch(err){console.log(err)};
-}
-
 
 
 
