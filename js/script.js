@@ -628,10 +628,17 @@ function showModal(text){
 	$("#modalCenter").modal('show');
 }
 
+function showAttendingModal(text){
+	$("#modalTitle").html("<h5>Response Submitted</h5>");
+	$("#modalText").html(text);
+	$("#modalCenter").modal('show');
+}
+
 function submitNotAttendingResponse(attendeeFromForm){
 
 	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"No","starter":"","main":"","allergies":"","group":attendeeFromForm['group'], "username": attendeeFromForm['username'], "updatedby": $username, "updateTime" : new Date().toISOString()};
 	updateRecord(jsondata, attendeeFromForm['_id']);
+	showAttendingModal("<p>Response submitted for </p><h5>"+attendeeFromForm['forname']+" "+attendeeFromForm['surname']+"</h5><p>Sorry you can't make it.</p>");
 
 }
 
@@ -643,13 +650,15 @@ function submitAttendingResponse(form, attendeeFromForm){
 	var allergy = form[2].value;	
 
 	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"Yes","starter":starter,"main":main,"allergies":allergy,"group":attendeeFromForm['group'], "username": attendeeFromForm['username'], "updatedby": $username, "updateTime" : new Date().toISOString()};
-	updateRecord(jsondata, attendeeFromForm['_id']);	
-
+	updateRecord(jsondata, attendeeFromForm['_id']);
+	showAttendingModal("<p>Response submitted for </p><h5>"+attendeeFromForm['forname']+" "+attendeeFromForm['surname']+"</h5><p>See you there.</p>");
 }
 
 function resetRsvp(attendeeFromForm){
 	var jsondata = {"forname": attendeeFromForm['forname'],"surname": attendeeFromForm['surname'],"type":attendeeFromForm['type'],"attending":"","starter":"","main":"","allergies":"","group":attendeeFromForm['group'], "username": attendeeFromForm['username'], "updatedby": $username, "updateTime" : new Date().toISOString()};
 	updateRecord(jsondata, attendeeFromForm['_id']);
+	showAttendingModal("<p>Response reset for </p><h5>"+attendeeFromForm['forname']+" "+attendeeFromForm['surname']+"</h5>");
+
 
 }
 

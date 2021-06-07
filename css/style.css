@@ -33,7 +33,13 @@
     border-radius: 0.25rem;
     box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
 }
+.atteding-reply{
+	color: green !important;
+}
 
+.notatteding-reply{
+	color:red !important;
+}
 
 .borderSpecial{
 	background-color: white;
