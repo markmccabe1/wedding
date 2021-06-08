@@ -1,5 +1,7 @@
 
 var $data = null
+var showRSVP = true;
+var person = null;
 
 $( document ).ready(function() {
 	$("#forbidden").hide();
@@ -13,14 +15,28 @@ $( document ).ready(function() {
 	  	});
 
 	$("#statsAdminBtn").click(function(){
-		console.log("clicked  statsAdminBtn");
 		window.location.replace("./admin.html");
 	});
 
 	$("#statsHomeBtn").click(function(){
-		console.log("clicked stats home");
 		window.location.replace("./index.html");
 	});
+
+	$("#replyBtn").click(function(){
+		if(showRSVP){
+			populateAttendanceTable();
+		}
+		else{
+			populateNonAttendanceTable();
+		}
+
+	});
+
+
+    $(document).on("click", ".tableRow", function() {
+		getSinglePersonData(this.id);
+ 	});
+	
 });
 
 
@@ -94,12 +110,31 @@ function populateAttendanceStats(){
 
 function populateAttendanceTable(){
 	var results = $data;
+	resetTable();
 
 	for(var i = 0;i < results.length; i++){
 		if(results[i]['attending'] == 'Yes' || results[i]['attending'] == 'No'){
 			addRow(results[i]);
 		}
 	}
+	showRSVP = false;
+
+}
+
+function populateNonAttendanceTable(){
+	var results = $data;
+	resetTable();
+
+	for(var i = 0;i < results.length; i++){
+		if(results[i]['attending'] == ''){
+			addRow(results[i]);
+		}
+	}
+	showRSVP = true;
+}
+
+function resetTable(){
+	$("#statsTableBody").html("");
 }
 
 function showForbidden(){
@@ -130,6 +165,28 @@ function getData(){
 	  });
 }
 
+function getSinglePersonData(id){
+
+	var query = {"_id" : id}; // get all records
+
+	var hints = {"$max": 1, "$orderby": {"updateTime": -1}}; // top ten, sort by creation id in descending order
+	db = new restdb("60834b7328bf9b609975a5f9", null);
+	db.attendee.find(query, hints, function(err, res){
+	  if (!err){
+	  		showModal(res[0]);
+	  	}
+	  });
+}
+
+function showModal(person){
+	$("#modalPersonTitle").html("<h5>"+person['forname']+" "+person['surname']+"</h5>");
+
+	var html = "<p>Type: "+person['type']+"</p><p>Group: "+person['group']+"</p><p>Table No: "+person['tableNo']+"</p><p>Update Time: "+person['updateTime']+"</p><p>Update By: "+person['updatedby']+"</p><p>Username: "+person['username']+"</p>"
+
+	$("#modalPersonText").html(html);
+	$("#modalPerson").modal('show');
+
+}
 
 function addRow(attendee){
 
@@ -142,9 +199,11 @@ function addRow(attendee){
 		color = "Red";
 	}
 
-	var row = "<tr style='color:"+color+"'><td>"+attendee['forname']+" "+attendee['surname']+"</td><td>"+attendee['main']+"</td><td>"+attendee['allergies']+"</td></tr>"
+	var row = "<tr class='tableRow' id='"+attendee['_id']+"'style='color:"+color+"'><td>"+attendee['forname']+" "+attendee['surname']+"</td><td>"+attendee['main']+"</td><td>"+attendee['allergies']+"</td></tr>"
 	$("#statsTableBody").append(row);
 }
+
+
 
 
 function populateChart(){

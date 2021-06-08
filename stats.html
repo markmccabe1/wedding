@@ -101,9 +101,26 @@
         </section>
         <section class="page-section" id = "currentRSVPDiv">
             <div class = "container">
+                        <div class="modal fade" id="modalPerson" tabindex="-1" role="dialog" aria-labelledby="modalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <center>
+                  <div class="modal-header bg-primary text-white text-center">
+                    <h5 class="modal-title w-100" id="modalPersonTitle">...</h5>
+                  </div>
+                  <div class="modal-body" id="modalPersonText">
+                    ...
+                  </div>
+                  <div class="modal-footer ">
+                    <button type="button" class="btn btn-primary text-center w-100" data-dismiss="modal">Close</button>
+                  </div>
+                </center>
+            </div>
+          </div>
+        </div>
                 <div class = "justify-content-center row">
                     <div class="col-12 ">
-                        <h1 class="text-center text-primary"> Replys </h1>
+                        <h1 class="text-center text-primary" id="replyBtn"> Replys </h1>
                         <input class="form-control" id="mySearchInput" type="text" placeholder="Search..">
                         <div class = "statsTable">
                             <table class="table">
@@ -122,6 +139,7 @@
                 </div>
             </div>
         </section>
+
 
         
 
