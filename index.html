@@ -59,7 +59,7 @@
                             <div class = "row">
                                 <div class="col">
                                     <br>
-                                    <a class="btn btn-outline-primary helpButton" id="helpBtn">Help</a>
+                                    <a class="btn btn-light helpButton" href="#" id="helpBtn">Watch Live</a>
                                 </div>
                             </div>
                         </form>
@@ -104,6 +104,9 @@
                         <li class="nav-item">
                             <a class="nav-link js-scroll-trigger" href="#page-top">Home</a>
                         </li>
+                        <li class="nav-item">
+                            <a class="nav-link js-scroll-trigger" href="#live">Watch Live</a>
+                        </li> 
                         <li class="nav-item">
                             <a class="nav-link js-scroll-trigger" href="#details">Details</a>
                         </li>
@@ -164,10 +167,31 @@
                     <div class="col-10 text-center">
                         <br>
                         <br>
-                        <a class="btn btn-primary btn-xl js-scroll-trigger" href="#details">Find Out More</a>
+                        <a class="btn btn-primary btn-xl js-scroll-trigger" href="#live">Watch Live</a>
                     </div>
                 </div>
         </header>
+        <section class="page-section livestream" id="live">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <h2 class="text-white mt-0">Watch Live!</h2>
+                        <hr class="divider light my-4">
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <iframe src="https://churchmedia.tv/iframe/28c1130e5aa16007c5d176a43db87a2bceb2a32d" allowfullscreen="" frameborder="0" style="width: 100%; max-width: 1000px; height: 700px; padding: 10px;"></iframe>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-lg-8 text-center">
+                        <p class="text-white mb-5" href="">Can't see? Click below</p>
+                        <a class="btn btn-light btn-xl js-scroll-trigger" href="https://churchmedia.tv/camera/st-thereses-church-belfast">Watch here</a>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
         <!-- About Section -->
         <section class="page-section bg-primary" id="details">
             <div class="container">
@@ -593,10 +617,9 @@
                     <h5 class="modal-title w-100" id="modalBigTitle">Help</h5>
                   </div>
                   <div class="modal-body" id="modalBigText">
-                    <p>Please enter your first name, last name and code from the RSVP Card. Don't forget any capital letters.</p>
-
+                    <p>Forgot your login and looking to watch the live stream?</p>
+                    <a class="btn btn-primary btn-xl js-scroll-trigger" href="https://churchmedia.tv/camera/st-thereses-church-belfast">Watch here</a>
                     <br>
-                    <p>If issues persist please contact us. It was probably Mark's fault :D</p>
                   </div>
                   <div class="modal-footer ">
                     <button type="button" class="btn btn-primary text-center w-100" data-dismiss="modal">Close</button>
