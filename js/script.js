@@ -15,6 +15,7 @@ $( document ).ready(function() {
 	checkExistingSession()
 	calculateWeddingCountdown();
 
+
 	$( "#loginForm" ).submit(function( event ) {
 	 	event.preventDefault();
 	  	$("#spinner").show();

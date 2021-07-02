@@ -171,6 +171,18 @@
 	background: #229ca0 !important;
 }
 
+.responsiveIFrame{
+	width:100%;
+	height: 0px;
+	padding-bottom: 56.25%;
+	position: relative;
+}
+
+.myIframe{
+	position: absolute;
+	width:100%;
+	height:100%;
+}
 
 
 
