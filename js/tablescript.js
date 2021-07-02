@@ -15,6 +15,11 @@ $( document ).ready(function() {
 
 });
 
+$(".tableh1").click(function(){
+		location.reload();
+	});
+
+
 
 function getTable(tableNumberString){
 	console.log("getting table "+tableNumberString);
@@ -30,7 +35,7 @@ function getTable(tableNumberString){
 
 	var query = {"tableNo" : tableNumber, "attending": "Yes"}; // get all records
 
-	var hints = {"$max": 20, "$orderby": {"forname": 1}}; // top ten, sort by creation id in descending order
+	var hints = {"$max": 20, "$orderby": {"group": 1}}; // top ten, sort by creation id in descending order
 	db = new restdb("60834b7328bf9b609975a5f9", null);
 	db.attendee.find(query, hints, function(err, res){
 	  if (!err){
