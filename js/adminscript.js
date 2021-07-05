@@ -19,6 +19,12 @@ $( document ).ready(function() {
 	$("#homeBtn").click(function(){
 		window.location.replace("./index.html");
 	});
+
+	$("#tablesBtn").click(function(){
+		window.location.replace("./tabledetail.html");
+	});
+
+	
 });
 
 

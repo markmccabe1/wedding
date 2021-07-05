@@ -21,6 +21,10 @@ $( document ).ready(function() {
 	$("#statsHomeBtn").click(function(){
 		window.location.replace("./index.html");
 	});
+	$("#statsTablesBtn").click(function(){
+		window.location.replace("./tabledetail.html");
+	});
+
 
 	$("#replyBtn").click(function(){
 		if(showRSVP){
