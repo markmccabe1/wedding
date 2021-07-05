@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <title> Maeve and Mark's Wedding</title>
+    <link rel="shortcut icon" type="image/ico" href="img/favicon.ico"/>
+    <!-- Font Awesome Icons -->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="css/style.css" rel="stylesheet" type="text/css">
+    
+    <link href="https://cdn.datatables.net/1.10.24/css/dataTables.bootstrap4.min.css" rel="stylesheet">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather+Sans:400,700" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Merriweather:400,300,300italic,400italic,700,700italic' rel='stylesheet' type='text/css'>
+    <!-- Plugin CSS -->
+    <link href="vendor/magnific-popup/magnific-popup.css" rel="stylesheet">
+    <!-- Theme CSS - Includes Bootstrap -->
+    <link href="css/creative.css" rel="stylesheet">
+
+    <script src="https://wedding-9b40.restdb.io/rest/_jsapi.js"></script>
+</head>
+
+<body id="page-top">
+    <div>       
+    <nav class="navbar navbar-expand-lg text-muted navbar-light fixed-top py-3" id="mainNav">
+            <div class="container">
+                <a class="navbar-brand js-scroll-trigger" id="userDisplay"></a>
+                <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                <div class="collapse navbar-collapse" id="navbarResponsive">
+                    <ul class="navbar-nav ml-auto my-2 my-lg-0" id = "myNavBar">
+                        <li class="nav-item">
+                            <a id="tableHomeBtn" class="nav-link js-scroll-trigger text-muted" href="#">Homepage</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="tableAdminBtn" class="nav-link js-scroll-trigger text-muted" href="#">Admin</a>
+                        </li>
+                        <li class="nav-item">
+                            <a id="tableStatsBtn" class="nav-link js-scroll-trigger text-muted" href="#">Stats</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <section class="page-section" id="mainNav">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col text-center center">
+                        <div class="myHeader col text-center">
+                            <h2 class="tableh1">Maeve & Mark</h2>
+                        </div>
+
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+            <div  id = "tablespinner" class="container text-center">
+                    <div class="spinner-border"></div>
+            </div>
+            <div id="tablesContent">
+                <div class = "container">
+                    <div class="row">
+                        <a class="btn btn-outline-primary col" id="mealChoiceBtn">Show Meal Choices</a>
+                        <a class="btn btn-outline-primary col" id="peopleBtn">Show People</a>
+                    </div>
+                    <br>
+                </div>
+            
+                <div class = "container" id="Mealdetails">
+                    <div class = "justify-content-center row">
+                        <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Top Table</h1>
+                            <div>
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="table0">
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>
+                        <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 1</h1>
+                            <div>
+                                <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="table1">
+                                  </tbody>
+                              </table>                        </div>
+                        </div>
+                        <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 2</h1>
+                            <div>
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="table2">
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>
+                        <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 3</h1>
+                            <div>
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="table3">
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>
+                        <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 4</h1>
+                            <div>
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="table4">
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>
+                        <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 5</h1>
+                            <div>
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="table5">
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>
+                                            <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 6</h1>
+                            <div>
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="table6">
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>
+                                            <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 7</h1>
+                            <div>
+                              <<table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="table7">
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>
+                                            <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 8</h1>
+                            <div>
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="table8">
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>
+                                            <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 9</h1>
+                            <div>
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="table9">
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>                                      <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 10</h1>
+                            <div>
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="table10">
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>                                        <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 11</h1>
+                            <div>
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="table11">
+                                  </tbody>
+                              </table>
+
+                            </div>
+                        </div>                                        <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 12</h1>
+                            <div>
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="table12">
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>
+                    </div>
+                </div> 
+                <div class = "container" id="tabledetails">
+                    <div class = "justify-content-center row">
+                        <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Top Table</h1>
+                            <div>
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Name</th>
+                                      <th scope="col">Meal</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="ptable0">
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>
+                        <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 1</h1>
+                            <div>
+                                <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="ptable1">
+                                  </tbody>
+                              </table>                        </div>
+                        </div>
+                        <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 2</h1>
+                            <div>
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="ptable2">
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>
+                        <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 3</h1>
+                            <div>
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="ptable3">
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>
+                        <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 4</h1>
+                            <div>
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="ptable4">
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>
+                        <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 5</h1>
+                            <div>
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="ptable5">
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>
+                                            <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 6</h1>
+                            <div>
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="ptable6">
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>
+                                            <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 7</h1>
+                            <div>
+                              <<table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="ptable7">
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>
+                                            <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 8</h1>
+                            <div>
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="ptable8">
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>
+                                            <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 9</h1>
+                            <div>
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="ptable9">
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>                                      <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 10</h1>
+                            <div>
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="ptable10">
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>                                        <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 11</h1>
+                            <div>
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="ptable11">
+                                  </tbody>
+                              </table>
+
+                            </div>
+                        </div>                                        <div class="col-10 ">
+                            <h1 class="text-center text-primary"> Table 12</h1>
+                            <div>
+                              <table class="table">
+                                  <thead>
+                                    <tr>
+                                      <th scope="col">Meal</th>
+                                      <th scope="col">Number</th>
+                                    </tr>
+                                  </thead>
+                                  <tbody id="ptable12">
+                                  </tbody>
+                              </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </section>
+        <div class="modal fade" id="modalTable" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+          <div class="modal-dialog modal-sm modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <center>
+                  <div class="modal-header bg-primary text-white text-center">
+                    <h5 class="modal-title w-100" id="modalTitle">Notes...</h5>
+                  </div>
+                  <div class="modal-body" id="modalTableText">
+                    ...
+                  </div>
+                  <div class="modal-footer ">
+                    <button type="button" class="btn btn-primary text-center w-100" data-dismiss="modal">Close</button>
+                  </div>
+                </center>
+            </div>
+          </div>
+        </div>
+       </div>
+        <!-- Footer -->
+        <footer class="bg-light py-5">
+            <div class="container">
+                <div class="small text-center text-muted">Copyright &copy; 2021 - Mark and Maeve</div>
+            </div>
+        </footer>
+        <!-- Bootstrap core JavaScript -->
+        <script src="vendor/jquery/jquery.min.js"></script>
+        <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+        <!-- Plugin JavaScript -->
+        <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+        <script src="vendor/magnific-popup/jquery.magnific-popup.min.js"></script>
+        <!-- Custom scripts for this template -->
+        <script src="js/creative.min.js"></script>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+        <script src="js/tabledetail.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+</body>
+
+</html>
+
+
+
+
+
+
+                            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
