@@ -10,6 +10,7 @@ var windowOffset;
 
 
 $( document ).ready(function() {
+	$("#content").show();
 	attendee = null;
 	$("#tableOfUsers").hide();
 	checkExistingSession()
@@ -103,7 +104,7 @@ function validateForm(){
 		return false;
 	}
 
-	if(code != "2bmccabe"){
+	if(code != "baby"){
 
 		showModal("Invalid Code. Please try again");
 		return false;
@@ -273,8 +274,8 @@ function checkExistingSession(){
 		}
 	}
 	else{
-
-			showLogin();
+			
+			//showLogin();
 	}
 }
 
@@ -344,7 +345,7 @@ function calculateWeddingCountdown(){
     var now = new Date();
  
  
-    var dueDate =  new Date("2021-07-15T12:30:00");
+    var dueDate =  new Date("2022-11-03T00:00:00");
 
  
     //Get the difference in seconds between the two days.
