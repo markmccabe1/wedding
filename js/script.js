@@ -13,7 +13,7 @@ $( document ).ready(function() {
 	$("#content").show();
 	attendee = null;
 	$("#tableOfUsers").hide();
-	checkExistingSession()
+	//checkExistingSession()
 	calculateWeddingCountdown();
 
 
