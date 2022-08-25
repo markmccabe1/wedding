@@ -9566,7 +9566,7 @@ html {
 hr.divider {
   max-width: 3.25rem;
   border-width: 0.2rem;
-  border-color: #005777;
+  border-color: pink;
 }
 
 hr.light {
@@ -9666,9 +9666,9 @@ header.masthead {
 }
 
 header.masthead h1 {
-  color:#005777 !important;
+  color:pink !important;
   font-size:17vw;
-  font-family: 'Brush Script MT', cursive;
+  font-family: 'Fredoka One';
   font-weight: bold;
 }
 

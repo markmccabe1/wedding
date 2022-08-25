@@ -122,9 +122,15 @@
 
 .tableh1{
   color:#005777 !important;
-  font-family: 'Brush Script MT', cursive;
+  font-family: 'roboto';
   font-size :5rem;
 
+}
+
+.baby{
+	color:pink !important;
+  	font-family: 'Fredoka One';
+	font-size: 17vw;
 }
 
 .myChair {
